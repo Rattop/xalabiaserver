@@ -456,7 +456,11 @@
                     <span class="service-icon">🎮</span>
                     <strong>Game Server</strong>
                     <span class="status online">online</span>
-                    <a href="#" style="color: #666; cursor: not-allowed;">hard-hardly.gl.joinmc.link</a>
+                    <a href="#" 
+   style="color: #666; cursor: pointer;" 
+   onclick="copiarTexto('hard-hardly.gl.joinmc.link'); return false;">
+   hard-hardly.gl.joinmc.link
+</a>
                     <p style="font-size: 12px; margin-top: 10px; color: #888;">Minecraft & mais</p>
                 </div>
             </div>
@@ -544,6 +548,13 @@
     </div>
 
     <script>
+        function copiarTexto(texto) {
+  navigator.clipboard.writeText(texto).then(() => {
+    alert("✅ Texto copiado: " + texto);
+  }).catch(err => {
+    alert("❌ Erro ao copiar: " + err);
+  });
+}
         // Fake visitor counter animation
         let counter = 1337;
         setInterval(() => {
@@ -609,6 +620,8 @@
                 ripple.remove();
             }, 1000);
         });
+
+        
 
         // Console easter egg
         console.log('%c🎮 VOCÊ ENCONTROU O EASTER EGG! 🎮', 'color: #00FF00; font-size: 20px; font-weight: bold; text-shadow: 0 0 10px #00FF00;');
