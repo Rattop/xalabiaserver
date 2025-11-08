@@ -12,6 +12,7 @@
     "proxy",
     "reverse-proxy",
     "jellyfin",
+    "server",
     "file-server"
   ],
   "author": "Rattão",
