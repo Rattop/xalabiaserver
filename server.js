@@ -1,273 +1,209 @@
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
-import path from "path";
 import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import { readFileSync } from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
 const app = express();
 
-// Logs de todas as requisições
+// Log TODAS as requisições
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log(`
+╔═══════════════════════════════════════════════════╗
+║ [${new Date().toISOString()}]
+║ Método: ${req.method}
+║ URL: ${req.url}
+║ Headers: ${JSON.stringify(req.headers, null, 2)}
+╚═══════════════════════════════════════════════════╝
+  `);
   next();
 });
 
-// Servir arquivos estáticos da RAIZ (onde está o index.html)
-app.use(express.static(__dirname));
+// Proxy Jellyfin
+app.use("/Jellyfin", createProxyMiddleware({
+  target: "http://safety-after.gl.at.ply.gg:29795",
+  changeOrigin: true,
+  pathRewrite: { "^/Jellyfin": "/web" },
+  ws: true,
+  logLevel: "debug",
+  onProxyReq: (proxyReq, req) => {
+    console.log(`✅ [Jellyfin Proxy] ${req.method} ${req.url} -> http://safety-after.gl.at.ply.gg:29795${proxyReq.path}`);
+  },
+  onError: (err, req, res) => {
+    console.error(`❌ [Jellyfin Error]`, err.message);
+    res.status(502).send(`Erro ao conectar: ${err.message}`);
+  }
+}));
 
-// Proxy para Jellyfin com logs detalhados
-app.use(
-  "/Jellyfin",
-  createProxyMiddleware({
-    target: "http://safety-after.gl.at.ply.gg:29795",
-    changeOrigin: true,
-    pathRewrite: (path, req) => {
-      const newPath = path.replace(/^\/Jellyfin/, "/web");
-      console.log(`[Jellyfin] Rewrite: ${path} -> ${newPath}`);
-      return newPath;
-    },
-    ws: true,
-    onProxyReq: (proxyReq, req, res) => {
-      console.log(`[Jellyfin Proxy] ${req.method} ${req.url}`);
-      console.log(`[Jellyfin Target] http://${proxyReq.host}${proxyReq.path}`);
-    },
-    onProxyRes: (proxyRes, req, res) => {
-      console.log(`[Jellyfin Response] ${proxyRes.statusCode}`);
-    },
-    onError: (err, req, res) => {
-      console.error("[Jellyfin Proxy Error]", err.message);
-      res.status(502).json({
-        error: "Bad Gateway",
-        message: "Não foi possível conectar ao Jellyfin",
-        details: err.message
-      });
-    }
-  })
-);
+// Proxy FileBrowser
+app.use("/FileBrowser", createProxyMiddleware({
+  target: "http://menu-ot.gl.at.ply.gg:20709",
+  changeOrigin: true,
+  pathRewrite: { "^/FileBrowser": "" },
+  logLevel: "debug",
+  onProxyReq: (proxyReq, req) => {
+    console.log(`✅ [FileBrowser Proxy] ${req.method} ${req.url} -> http://menu-ot.gl.at.ply.gg:20709${proxyReq.path}`);
+  },
+  onError: (err, req, res) => {
+    console.error(`❌ [FileBrowser Error]`, err.message);
+    res.status(502).send(`Erro ao conectar: ${err.message}`);
+  }
+}));
 
-// Proxy para FileBrowser com logs detalhados
-app.use(
-  "/FileBrowser",
-  createProxyMiddleware({
-    target: "http://menu-ot.gl.at.ply.gg:20709",
-    changeOrigin: true,
-    pathRewrite: (path, req) => {
-      const newPath = path.replace(/^\/FileBrowser/, "");
-      console.log(`[FileBrowser] Rewrite: ${path} -> ${newPath || "/"}`);
-      return newPath || "/";
-    },
-    onProxyReq: (proxyReq, req, res) => {
-      console.log(`[FileBrowser Proxy] ${req.method} ${req.url}`);
-      console.log(`[FileBrowser Target] http://${proxyReq.host}${proxyReq.path}`);
-    },
-    onProxyRes: (proxyRes, req, res) => {
-      console.log(`[FileBrowser Response] ${proxyRes.statusCode}`);
-    },
-    onError: (err, req, res) => {
-      console.error("[FileBrowser Proxy Error]", err.message);
-      res.status(502).json({
-        error: "Bad Gateway",
-        message: "Não foi possível conectar ao FileBrowser",
-        details: err.message
-      });
-    }
-  })
-);
-
-// Health check
+// Health check JSON
 app.get("/health", (req, res) => {
+  console.log("✅ Health check OK");
   res.json({ 
-    status: "ok", 
+    status: "ok",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    services: {
-      jellyfin: "http://safety-after.gl.at.ply.gg:29795",
-      filebrowser: "http://menu-ot.gl.at.ply.gg:20709"
-    }
+    message: "XalabiaServer está funcionando!"
   });
 });
 
-// Página de teste dos proxies
-app.get("/test", (req, res) => {
+// Página de debug
+app.get("/debug", (req, res) => {
+  console.log("✅ Debug page requested");
   res.send(`
     <!DOCTYPE html>
     <html>
     <head>
-      <title>XalabiaServer - Teste de Proxies</title>
+      <title>Debug - XalabiaServer</title>
       <style>
-        body {
-          background: #000;
-          color: #00FF00;
-          font-family: 'Courier New', monospace;
-          padding: 20px;
-        }
-        .test-card {
-          border: 2px solid #00FF00;
-          padding: 20px;
-          margin: 20px 0;
-          background: rgba(0,255,0,0.1);
-        }
-        button {
-          background: #00FF00;
-          color: #000;
-          border: none;
-          padding: 10px 20px;
-          cursor: pointer;
-          font-family: 'Courier New', monospace;
-          font-weight: bold;
-          margin: 5px;
-        }
-        button:hover {
-          background: #00FFFF;
-        }
-        #result {
-          margin-top: 20px;
-          padding: 10px;
-          background: rgba(255,255,0,0.1);
-          border-left: 3px solid #FFFF00;
-          white-space: pre-wrap;
-        }
+        body { background: #000; color: #0f0; font-family: monospace; padding: 20px; }
+        h1 { color: #0ff; }
+        pre { background: #111; padding: 10px; border: 1px solid #0f0; }
+        a { color: #ff0; }
       </style>
     </head>
     <body>
-      <h1>🔧 XalabiaServer - Teste de Proxies</h1>
+      <h1>🔧 XalabiaServer Debug</h1>
+      <h2>Informações do Servidor</h2>
+      <pre>
+Node Version: ${process.version}
+Platform: ${process.platform}
+Uptime: ${process.uptime()}s
+Diretório: ${__dirname}
+      </pre>
       
-      <div class="test-card">
-        <h2>Testar Conexões</h2>
-        <button onclick="testService('/Jellyfin')">Testar Jellyfin</button>
-        <button onclick="testService('/FileBrowser')">Testar FileBrowser</button>
-        <button onclick="testService('/health')">Testar Health Check</button>
-      </div>
-
-      <div class="test-card">
-        <h2>Links Diretos</h2>
-        <a href="/Jellyfin" style="color: #00FFFF; display: block; margin: 5px 0;">Abrir Jellyfin</a>
-        <a href="/FileBrowser" style="color: #00FFFF; display: block; margin: 5px 0;">Abrir FileBrowser</a>
-        <a href="/" style="color: #00FFFF; display: block; margin: 5px 0;">Voltar ao Hub</a>
-      </div>
-
-      <div id="result"></div>
-
+      <h2>Arquivos no Diretório</h2>
+      <pre id="files">Carregando...</pre>
+      
+      <h2>Testes</h2>
+      <button onclick="fetch('/health').then(r=>r.json()).then(d=>alert(JSON.stringify(d,null,2)))">Testar /health</button>
+      <button onclick="window.location.href='/Jellyfin'">Testar /Jellyfin</button>
+      <button onclick="window.location.href='/FileBrowser'">Testar /FileBrowser</button>
+      
+      <h2>Links</h2>
+      <a href="/">Voltar ao Hub</a>
+      
       <script>
-        async function testService(url) {
-          const result = document.getElementById('result');
-          result.innerHTML = 'Testando ' + url + '...\\n';
-          
-          try {
-            const response = await fetch(url);
-            result.innerHTML += 'Status: ' + response.status + ' ' + response.statusText + '\\n';
-            result.innerHTML += 'Headers:\\n';
-            response.headers.forEach((value, key) => {
-              result.innerHTML += '  ' + key + ': ' + value + '\\n';
-            });
-            
-            if (response.ok) {
-              result.innerHTML += '\\n✅ Conexão bem-sucedida!';
-              result.style.borderColor = '#00FF00';
-            } else {
-              result.innerHTML += '\\n❌ Erro na conexão';
-              result.style.borderColor = '#FF0000';
-            }
-          } catch (error) {
-            result.innerHTML += '\\n❌ Erro: ' + error.message;
-            result.style.borderColor = '#FF0000';
-          }
-        }
+        fetch('/api/files')
+          .then(r => r.json())
+          .then(d => document.getElementById('files').textContent = JSON.stringify(d, null, 2))
+          .catch(e => document.getElementById('files').textContent = 'Erro: ' + e);
       </script>
     </body>
     </html>
   `);
 });
 
-// Rota principal - DEVE SER SEMPRE A ÚLTIMA rota GET
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// API para listar arquivos (debug)
+app.get("/api/files", async (req, res) => {
+  try {
+    const { readdirSync } = await import("fs");
+    const files = readdirSync(__dirname);
+    console.log("✅ Arquivos listados:", files);
+    res.json({ 
+      directory: __dirname,
+      files: files
+    });
+  } catch (error) {
+    console.error("❌ Erro ao listar arquivos:", error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
-// 404 handler - deve estar DEPOIS de todas as outras rotas
+// Servir index.html na raiz
+app.get("/", (req, res) => {
+  try {
+    const indexPath = join(__dirname, "index.html");
+    console.log(`✅ Tentando servir: ${indexPath}`);
+    
+    const html = readFileSync(indexPath, "utf8");
+    console.log(`✅ Arquivo lido com sucesso! Tamanho: ${html.length} bytes`);
+    
+    res.type("html").send(html);
+  } catch (error) {
+    console.error(`❌ ERRO ao servir index.html:`, error);
+    res.status(500).send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>body{background:#000;color:#f00;font-family:monospace;padding:50px;}</style>
+      </head>
+      <body>
+        <h1>❌ ERRO: index.html não encontrado</h1>
+        <p>Caminho procurado: ${join(__dirname, "index.html")}</p>
+        <p>Erro: ${error.message}</p>
+        <p><a href="/debug" style="color:#0ff;">Ver página de debug</a></p>
+      </body>
+      </html>
+    `);
+  }
+});
+
+// 404 Handler
 app.use((req, res) => {
-  console.log(`[404] Rota não encontrada: ${req.method} ${req.url}`);
+  console.log(`❌ [404] Não encontrado: ${req.method} ${req.url}`);
   res.status(404).send(`
     <!DOCTYPE html>
     <html>
-      <head>
-        <title>404 - XalabiaServer</title>
-        <style>
-          body {
-            background: #000;
-            color: #00FF00;
-            font-family: 'Courier New', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-          }
-          h1 { font-size: 48px; text-shadow: 0 0 20px #00FF00; }
-          a { color: #00FFFF; text-decoration: none; }
-          a:hover { color: #FFFF00; }
-          .debug { 
-            margin-top: 20px; 
-            padding: 10px; 
-            background: rgba(255,0,0,0.1);
-            border: 1px solid #FF0000;
-            font-size: 12px;
-          }
-        </style>
-      </head>
-      <body>
-        <div>
-          <h1>404 - Página não encontrada</h1>
-          <p>A página <code>${req.url}</code> não existe no XalabiaServer</p>
-          <div class="debug">
-            <p>Método: ${req.method}</p>
-            <p>URL: ${req.url}</p>
-            <p>Timestamp: ${new Date().toISOString()}</p>
-          </div>
-          <p style="margin-top: 20px;">
-            <a href="/">← Voltar para o Hub</a> | 
-            <a href="/test">Página de Testes</a>
-          </p>
-        </div>
-      </body>
+    <head>
+      <style>body{background:#000;color:#0f0;font-family:monospace;text-align:center;padding:50px;}</style>
+    </head>
+    <body>
+      <h1>404 - Não encontrado</h1>
+      <p>URL: ${req.url}</p>
+      <p><a href="/" style="color:#0ff;">← Voltar</a> | <a href="/debug" style="color:#ff0;">Debug</a></p>
+    </body>
     </html>
   `);
 });
 
-// Error handler global
+// Error Handler
 app.use((err, req, res, next) => {
-  console.error("[Global Error]", err);
-  res.status(500).json({
+  console.error("❌ [ERRO GLOBAL]", err);
+  res.status(500).json({ 
     error: "Internal Server Error",
-    message: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    message: err.message 
   });
 });
 
 const PORT = process.env.PORT || 10000;
+
 app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════════════════╗
-║     🎮 XalabiaServer Proxy rodando!               ║
+║                                                    ║
+║     🎮 XalabiaServer está RODANDO!                ║
 ║                                                    ║
 ║     Porta: ${PORT}                                  ║
-║     Ambiente: ${process.env.NODE_ENV || 'production'}              ║
+║     Diretório: ${__dirname}
 ║                                                    ║
-║     Rotas disponíveis:                            ║
-║     • /                 (Hub principal)           ║
-║     • /Jellyfin         (Proxy Jellyfin)          ║
-║     • /FileBrowser      (Proxy FileBrowser)       ║
-║     • /test             (Página de testes)        ║
-║     • /health           (Health check)            ║
+║     📍 URLs Disponíveis:                          ║
+║     • http://localhost:${PORT}/                     ║
+║     • http://localhost:${PORT}/debug                ║
+║     • http://localhost:${PORT}/health               ║
+║     • http://localhost:${PORT}/Jellyfin             ║
+║     • http://localhost:${PORT}/FileBrowser          ║
 ║                                                    ║
 ╚════════════════════════════════════════════════════╝
   `);
   
-  console.log("\n[INFO] Proxies configurados:");
-  console.log("  - Jellyfin: http://safety-after.gl.at.ply.gg:29795");
-  console.log("  - FileBrowser: http://menu-ot.gl.at.ply.gg:20709");
-  console.log("\n[INFO] Aguardando requisições...\n");
+  console.log("\n✅ Servidor iniciado com sucesso!");
+  console.log("✅ Aguardando requisições...\n");
 });
