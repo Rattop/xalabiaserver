@@ -8,10 +8,11 @@ Portal principal do XalabiaServer com proxy reverso para acesso HTTPS seguro aos
 xalabiaserver/
 ├── server.js           # Servidor Express com proxy
 ├── package.json        # Dependências do Node.js
-├── public/            # Arquivos estáticos
-│   └── index.html     # Página principal do hub
-└── README.md          # Este arquivo
+├── index.html          # Página principal do hub (NA RAIZ)
+└── README.md           # Este arquivo
 ```
+
+**IMPORTANTE:** O arquivo `index.html` deve estar na **raiz** do projeto, junto com `server.js`!
 
 ## 🚀 Como Configurar
 
