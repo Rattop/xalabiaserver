@@ -22,34 +22,40 @@ app.use((req, res, next) => {
   next();
 });
 
-// Proxy Jellyfin
+// Proxy Jellyfin (reverse proxy transparente)
 app.use("/Jellyfin", createProxyMiddleware({
   target: "http://safety-after.gl.at.ply.gg:29795",
   changeOrigin: true,
-  pathRewrite: { "^/Jellyfin": "/web" },
+  secure: false,
   ws: true,
+  pathRewrite: { "^/Jellyfin": "/web" },
   logLevel: "debug",
   onProxyReq: (proxyReq, req) => {
-    console.log(`✅ [Jellyfin Proxy] ${req.method} ${req.url} -> http://safety-after.gl.at.ply.gg:29795${proxyReq.path}`);
+    console.log(`✅ [Jellyfin Proxy] ${req.method} ${req.url} -> ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`);
   },
   onError: (err, req, res) => {
     console.error(`❌ [Jellyfin Error]`, err.message);
-    res.status(502).send(`Erro ao conectar: ${err.message}`);
+    if (!res.headersSent) {
+      res.status(502).send(`Erro ao conectar ao Jellyfin: ${err.message}`);
+    }
   }
 }));
 
-// Proxy FileBrowser
+// Proxy FileBrowser (reverse proxy transparente)
 app.use("/FileBrowser", createProxyMiddleware({
   target: "http://menu-ot.gl.at.ply.gg:20709",
   changeOrigin: true,
+  secure: false,
   pathRewrite: { "^/FileBrowser": "" },
   logLevel: "debug",
   onProxyReq: (proxyReq, req) => {
-    console.log(`✅ [FileBrowser Proxy] ${req.method} ${req.url} -> http://menu-ot.gl.at.ply.gg:20709${proxyReq.path}`);
+    console.log(`✅ [FileBrowser Proxy] ${req.method} ${req.url} -> ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`);
   },
   onError: (err, req, res) => {
     console.error(`❌ [FileBrowser Error]`, err.message);
-    res.status(502).send(`Erro ao conectar: ${err.message}`);
+    if (!res.headersSent) {
+      res.status(502).send(`Erro ao conectar ao FileBrowser: ${err.message}`);
+    }
   }
 }));
 
