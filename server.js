@@ -34,7 +34,7 @@ app.use(
 app.use(
   "/FileBrowser",
   createProxyMiddleware({
-    target: "http://menu-ot.gl.at.ply.gg:20709",
+    target: "http://menu-ot.gl.at.ply.gg:20709/login?redirect=/files/",
     changeOrigin: true,
     pathRewrite: { "^/FileBrowser": "" },
     onProxyReq: (proxyReq, req, res) => {
