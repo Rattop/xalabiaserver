@@ -14,8 +14,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// Servir arquivos estáticos da pasta public
-app.use(express.static(path.join(__dirname, "public")));
+// Servir arquivos estáticos da RAIZ (onde está o index.html)
+app.use(express.static(__dirname));
 
 // Proxy para Jellyfin com logs detalhados
 app.use(
@@ -31,7 +31,7 @@ app.use(
     ws: true,
     onProxyReq: (proxyReq, req, res) => {
       console.log(`[Jellyfin Proxy] ${req.method} ${req.url}`);
-      console.log(`[Jellyfin Target] ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`);
+      console.log(`[Jellyfin Target] http://${proxyReq.host}${proxyReq.path}`);
     },
     onProxyRes: (proxyRes, req, res) => {
       console.log(`[Jellyfin Response] ${proxyRes.statusCode}`);
@@ -60,7 +60,7 @@ app.use(
     },
     onProxyReq: (proxyReq, req, res) => {
       console.log(`[FileBrowser Proxy] ${req.method} ${req.url}`);
-      console.log(`[FileBrowser Target] ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`);
+      console.log(`[FileBrowser Target] http://${proxyReq.host}${proxyReq.path}`);
     },
     onProxyRes: (proxyRes, req, res) => {
       console.log(`[FileBrowser Response] ${proxyRes.statusCode}`);
@@ -181,9 +181,9 @@ app.get("/test", (req, res) => {
   `);
 });
 
-// Rota principal
+// Rota principal - DEVE SER SEMPRE A ÚLTIMA rota GET
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // 404 handler - deve estar DEPOIS de todas as outras rotas
@@ -257,11 +257,11 @@ app.listen(PORT, () => {
 ║     Ambiente: ${process.env.NODE_ENV || 'production'}              ║
 ║                                                    ║
 ║     Rotas disponíveis:                            ║
-║     • http://localhost:${PORT}/                     ║
-║     • http://localhost:${PORT}/Jellyfin             ║
-║     • http://localhost:${PORT}/FileBrowser          ║
-║     • http://localhost:${PORT}/test                 ║
-║     • http://localhost:${PORT}/health               ║
+║     • /                 (Hub principal)           ║
+║     • /Jellyfin         (Proxy Jellyfin)          ║
+║     • /FileBrowser      (Proxy FileBrowser)       ║
+║     • /test             (Página de testes)        ║
+║     • /health           (Health check)            ║
 ║                                                    ║
 ╚════════════════════════════════════════════════════╝
   `);
