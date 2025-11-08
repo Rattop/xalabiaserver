@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ XalabiaServer Hub ⚡ Portal Principal</title>
+    <title>⚡ XalabiaServer Hub ⚡</title>
     <style>
         * {
             margin: 0;
@@ -301,11 +301,6 @@
             animation: pulse 2s infinite;
         }
 
-        .status.offline {
-            background: #FF0000;
-            color: #FFF;
-        }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -330,6 +325,28 @@
             box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
         }
 
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            margin-left: 5px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00FF00;
+            border-radius: 3px;
+            font-size: 10px;
+            color: #00FF00;
+            font-weight: bold;
+        }
+
+        .decoration {
+            display: inline-block;
+            animation: spin 4s linear infinite;
+            margin: 0 10px;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             .ascii-header {
                 font-size: 8px;
@@ -347,40 +364,6 @@
             .container {
                 padding: 10px;
             }
-        }
-
-        a {
-            color: #00FFFF;
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        a:hover {
-            color: #FFFF00;
-            text-shadow: 0 0 10px currentColor;
-        }
-
-        .decoration {
-            display: inline-block;
-            animation: spin 4s linear infinite;
-            margin: 0 10px;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            margin-left: 5px;
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid #00FF00;
-            border-radius: 3px;
-            font-size: 10px;
-            color: #00FF00;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -438,7 +421,7 @@
                     <span class="service-icon">📂</span>
                     <strong>FTP</strong>
                     <span class="status online">online</span>
-                    <a href="#" style="cursor: pointer;" onclick="copiarTexto('sftp://ratto@quite-drivers.gl.at.ply.gg:26609'); return false;">Copiar SFTP →</a>
+                    <a href="#" onclick="copiarTexto('sftp://ratto@quite-drivers.gl.at.ply.gg:26609'); return false;">Copiar SFTP →</a>
                     <p style="font-size: 12px; margin-top: 10px; color: #888;">Transferência direta via SFTP</p>
                 </div>
                 
@@ -446,7 +429,7 @@
                     <span class="service-icon">🎮</span>
                     <strong>Game Server</strong>
                     <span class="status online">online</span>
-                    <a href="#" style="cursor: pointer;" onclick="copiarTexto('hard-hardly.gl.joinmc.link'); return false;">Copiar IP →</a>
+                    <a href="#" onclick="copiarTexto('hard-hardly.gl.joinmc.link'); return false;">Copiar IP →</a>
                     <p style="font-size: 12px; margin-top: 10px; color: #888;">Minecraft & mais</p>
                 </div>
             </div>
