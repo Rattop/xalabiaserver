@@ -1,0 +1,116 @@
+/* ======================
+   ANIMATIONS
+   ====================== */
+
+/* Body Flicker */
+body {
+    animation: flicker 0.15s infinite alternate;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.98; }
+    100% { opacity: 1; }
+}
+
+/* Stars Animation */
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent);
+    background-size: 200px 200px;
+    animation: stars 200s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes stars {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-2000px); }
+}
+
+/* Title Glow */
+.main-title h1 {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
+    }
+    to {
+        text-shadow: 0 0 20px #00FF00, 0 0 30px #00FF00, 0 0 40px #00FF00;
+    }
+}
+
+/* Blink Effect */
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Marquee Scroll */
+.marquee {
+    animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Service Card Shine */
+.service-card:hover::before {
+    animation: shine 0.5s ease-in-out;
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+/* Status Pulse */
+.status.online {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Decoration Spin */
+.decoration {
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* Ripple Effect */
+@keyframes ripple {
+    to {
+        width: 200px;
+        height: 200px;
+        margin-left: -100px;
+        margin-top: -100px;
+        opacity: 0;
+    }
+}

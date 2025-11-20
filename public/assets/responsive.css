@@ -1,0 +1,173 @@
+/* ======================
+   RESPONSIVE DESIGN
+   ====================== */
+
+/* Tablets and below */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .ascii-header {
+        font-size: 8px;
+        overflow-x: scroll;
+    }
+    
+    .marquee-container {
+        margin: 20px -10px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .main-title h1 {
+        font-size: 32px;
+        letter-spacing: 3px;
+    }
+
+    .main-title p {
+        font-size: 14px;
+    }
+
+    .retro-box {
+        padding: 15px;
+    }
+
+    .retro-box h2 {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+
+    .service-card {
+        padding: 20px 15px;
+    }
+
+    .guide-section {
+        padding: 15px;
+    }
+
+    .terminal {
+        padding: 10px;
+        font-size: 11px;
+    }
+
+    .terminal p {
+        word-break: break-all;
+    }
+
+    .contact-info {
+        font-size: 16px;
+    }
+
+    .footer {
+        margin-top: 30px;
+        padding: 15px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .ascii-header {
+        font-size: 6px;
+    }
+
+    .main-title h1 {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+
+    .main-title p {
+        font-size: 12px;
+    }
+
+    .marquee {
+        font-size: 12px;
+    }
+
+    .retro-box h2 {
+        font-size: 16px;
+    }
+
+    .service-icon {
+        font-size: 32px;
+    }
+
+    .service-card strong {
+        font-size: 14px;
+    }
+
+    .service-description {
+        font-size: 11px;
+    }
+
+    .guide-section h3 {
+        font-size: 14px;
+    }
+
+    .guide-section p,
+    .guide-section li {
+        font-size: 13px;
+    }
+
+    .terminal {
+        font-size: 10px;
+    }
+
+    .visitor-counter {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .badge {
+        font-size: 8px;
+        padding: 2px 6px;
+    }
+
+    .status {
+        font-size: 10px;
+        padding: 1px 6px;
+    }
+}
+
+/* Landscape mode on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .ascii-header {
+        font-size: 7px;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* High-DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Print styles */
+@media print {
+    .stars,
+    body::before,
+    .marquee-container,
+    .decoration {
+        display: none;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .retro-box,
+    .service-card,
+    .terminal {
+        border-color: black;
+        box-shadow: none;
+    }
+}
