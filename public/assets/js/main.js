@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // =========================================================================
     // 1. SISTEMA DE CÓPIA PARA ÁREA DE TRANSFERÊNCIA (CLIPBOARD API)
-    // Usando data-attributes em vez de eventos inline no HTML
     // =========================================================================
     const copyButtons = document.querySelectorAll('.copy-btn');
 
@@ -21,24 +20,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const isPixBtn = button.classList.contains('pix-btn');
 
             try {
-                // API Nativa do Browser
                 await navigator.clipboard.writeText(textToCopy);
                 
-                // Feedback de Sucesso
                 button.innerText = "✓ COPIADO COM SUCESSO!";
                 button.style.backgroundColor = "#00FFFF";
                 button.style.color = "#000000";
                 
-                // Retorna ao estado inicial após 2 segundos
                 setTimeout(() => {
                     button.innerText = originalText;
                     button.style.backgroundColor = "transparent";
                     
-                    // Tratamento específico de cor para o botão do PIX e botão padrão
                     if (isPixBtn) {
-                        button.style.color = "#FFFF00"; // Amarelo (Accent)
+                        button.style.color = "#FFFF00";
                     } else {
-                        button.style.color = "#00FFFF"; // Ciano (Secondary)
+                        button.style.color = "#00FFFF";
                     }
                 }, 2000);
 
@@ -58,14 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (counterElement) {
         setInterval(() => {
-            // Adiciona um valor randômico pequeno para simular tráfego
             hitCounter += Math.floor(Math.random() * 2);
             counterElement.textContent = String(hitCounter).padStart(6, '0');
         }, 12000);
     }
 
     // =========================================================================
-    // 3. CONTADOR DE UPTIME (Tempo de atividade simulado/real)
+    // 3. CONTADOR DE UPTIME
     // Base inicial: 42 dias, 13 horas e 37 minutos
     // =========================================================================
     const uptimeElement = document.getElementById('uptime');
@@ -88,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Inicializa o contador e roda a cada 1 segundo
     updateUptime();
     setInterval(updateUptime, 1000);
 
@@ -96,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. EFEITO VISUAL DE RIPPLE (Onda no clique)
     // =========================================================================
     document.addEventListener('click', (e) => {
-        // Ignora cliques em botões, links ou dentro do card do github para não sobrepor UI interativa
         if(e.target.tagName === 'BUTTON' || 
            e.target.tagName === 'A' || 
            e.target.closest('.github-btn')) {
@@ -105,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const ripple = document.createElement('div');
         
-        // Estilos base inline que precisam das coordenadas do mouse
         ripple.style.position = 'fixed';
         ripple.style.left = e.clientX + 'px';
         ripple.style.top = e.clientY + 'px';
@@ -117,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ripple.style.animation = 'ripple-effect 0.8s ease-out';
         ripple.style.zIndex = '9999';
         
-        // Adiciona a keyframe globalmente na primeira vez que clicar
         if(!document.getElementById('ripple-style')) {
             const style = document.createElement('style');
             style.id = 'ripple-style';
@@ -130,13 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         document.body.appendChild(ripple);
-        
-        // Limpa do DOM após a animação
         setTimeout(() => ripple.remove(), 800);
     });
 
     // =========================================================================
-    // 5. EASTER EGG CONSOLE (A mensagem que os recrutadores vão adorar ver)
+    // 5. EASTER EGG CONSOLE
     // =========================================================================
     console.log('%c[SYSTEM] DEPLOYMENT BEM SUCEDIDO', 'color: #00FF00; font-size: 16px; font-weight: bold;');
     console.log('%cRepositório: https://github.com/Rattop/xalabiaserver', 'color: #00FFFF;');
