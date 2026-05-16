@@ -3,338 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="XalabiaServer — Hub de infraestrutura pessoal. Streaming, gaming, e administração de sistemas.">
-    <title>XalabiaServer | Mission Control</title>
+    <meta name="description" content="XalabiaServer — Hub de infraestrutura pessoal. Streaming, gaming e administração.">
+    <title>XalabiaServer | Ops Dashboard</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/animations.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body>
-
-    <!-- Background canvas for particle effect -->
-    <canvas id="bg-canvas" aria-hidden="true"></canvas>
-
-    <!-- Scanline overlay -->
-    <div class="scanlines" aria-hidden="true"></div>
-
     <div class="container">
-
-        <!-- ===================== HEADER ===================== -->
         <header class="site-header">
             <div class="brand">
-                <div class="brand-hex" aria-hidden="true">
-                    <svg viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30 2L58 18V34L30 50L2 34V18L30 2Z" stroke="currentColor" stroke-width="2"/>
-                        <path d="M30 12L48 22V32L30 42L12 32V22L30 12Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.5"/>
-                        <circle cx="30" cy="27" r="4" fill="currentColor"/>
-                    </svg>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12l10-8 10 8M12 22V12"/></svg>
                 </div>
                 <div class="brand-info">
-                    <h1 class="brand-name">Xalabia<span class="brand-accent">Server</span></h1>
-                    <p class="brand-tagline">Hub de Infraestrutura &amp; Gaming</p>
+                    <h1 class="brand-name">XalabiaServer</h1>
+                    <p class="brand-tagline">Node-01 · Infraestrutura Privada</p>
                 </div>
             </div>
-            <nav class="header-nav" aria-label="Status e segurança">
-                <div class="nav-badge secure">
-                    <span class="pulse-dot" aria-hidden="true"></span>
-                    TLS 1.3 ATIVO
-                </div>
-                <div class="nav-badge version">ARCH LINUX</div>
-            </nav>
+            <div class="header-badges">
+                <span class="badge secure"><span class="dot pulse"></span> TLS 1.3</span>
+                <span class="badge">Arch Linux</span>
+            </div>
         </header>
 
-        <!-- ===================== TICKER ===================== -->
-        <div class="status-bar" role="status" aria-label="Status do sistema">
-            <div class="status-bar-inner">
-                <span class="status-item">
-                    <span class="status-dot green" aria-hidden="true"></span>
-                    OPERACIONAL
-                </span>
-                <span class="status-sep" aria-hidden="true">//</span>
-                <span class="status-item">FIBRA 1 Gbps SIMÉTRICO</span>
-                <span class="status-sep" aria-hidden="true">//</span>
-                <span class="status-item">BTRFS · SNAPSHOTS ATIVOS</span>
-                <span class="status-sep" aria-hidden="true">//</span>
-                <span class="status-item">UPTIME: <span id="uptime-display" aria-live="polite">42d 13:37:00</span></span>
-                <span class="status-sep" aria-hidden="true">//</span>
-                <span class="status-item">NODE-01 · SÃO PAULO</span>
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-label">Status da Rede</span>
+                <div class="metric-value">1.0 <span class="metric-unit">Gbps</span></div>
+                <span class="metric-subtext">Link Simétrico (Fibra)</span>
             </div>
-        </div>
-
-        <!-- ===================== HERO ===================== -->
-        <section class="hero" aria-labelledby="hero-heading">
-            <div class="hero-text">
-                <p class="hero-label">Acesso privado · Por convite</p>
-                <h2 id="hero-heading" class="hero-title">
-                    Um servidor.<br>
-                    <span class="gradient-text">Múltiplos mundos.</span>
-                </h2>
-                <p class="hero-desc">
-                    Infraestrutura doméstica gerenciada para streaming de mídia, 
-                    gaming cooperativo e acesso remoto seguro. Tudo no mesmo nó.
-                </p>
+            <div class="metric-card">
+                <span class="metric-label">Storage (BTRFS)</span>
+                <div class="metric-value">1.82 <span class="metric-unit">TiB</span></div>
+                <span class="metric-subtext">Snapshots Ativos</span>
             </div>
-            <div class="hero-stats" aria-label="Estatísticas do hardware">
-                <div class="stat-item">
-                    <span class="stat-value">1.82</span>
-                    <span class="stat-unit">TiB</span>
-                    <span class="stat-label">Armazenamento</span>
-                </div>
-                <div class="stat-divider" aria-hidden="true"></div>
-                <div class="stat-item">
-                    <span class="stat-value">7.8</span>
-                    <span class="stat-unit">GB</span>
-                    <span class="stat-label">RAM Total</span>
-                </div>
-                <div class="stat-divider" aria-hidden="true"></div>
-                <div class="stat-item">
-                    <span class="stat-value">99.9</span>
-                    <span class="stat-unit">%</span>
-                    <span class="stat-label">Uptime Alvo</span>
-                </div>
+            <div class="metric-card">
+                <span class="metric-label">System Uptime</span>
+                <div class="metric-value" id="uptime-display">--:--:--</div>
+                <span class="metric-subtext">Alvo: 99.9% SLA</span>
             </div>
         </section>
 
-        <!-- ===================== SERVICES ===================== -->
         <main>
-            <section class="section" aria-labelledby="services-heading">
-                <div class="section-header">
-                    <h2 id="services-heading" class="section-title">
-                        <span class="section-num" aria-hidden="true">01</span>
-                        Serviços Ativos
-                    </h2>
-                    <div class="live-badge" role="status" aria-label="Sistema ao vivo">
-                        <span class="live-dot" aria-hidden="true"></span>
-                        AO VIVO
+            <div class="section-heading">
+                <h2>Serviços e Aplicações</h2>
+            </div>
+
+            <div class="services-grid">
+                <article class="card service-card">
+                    <div class="card-header">
+                        <span class="status-indicator online">Online</span>
+                        <span class="service-category">Mídia</span>
                     </div>
-                </div>
+                    <div class="card-body">
+                        <h3>Jellyfin</h3>
+                        <p>Streaming de mídia com transcodificação HW. Perfis e sync de legendas.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://jellyfin.xalabiashub.online" class="btn btn-primary" target="_blank" rel="noopener">Acessar Player</a>
+                    </div>
+                </article>
 
-                <div class="services-grid">
+                <article class="card service-card">
+                    <div class="card-header">
+                        <span class="status-indicator online">Online</span>
+                        <span class="service-category">Arquivos</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>FileBrowser</h3>
+                        <p>Interface web de gestão. Upload/download remoto e sincronização.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://files.xalabiashub.online" class="btn btn-primary" target="_blank" rel="noopener">Gerenciador</a>
+                    </div>
+                </article>
 
-                    <!-- Jellyfin -->
-                    <article class="service-card card-media" aria-labelledby="card-jellyfin">
-                        <div class="card-top">
-                            <div class="card-icon-wrap" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-                            </div>
-                            <div class="card-meta">
-                                <span class="card-category">MÍDIA</span>
-                                <span class="status-pill online" role="status">Online</span>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3 id="card-jellyfin" class="card-title">Jellyfin</h3>
-                            <p class="card-desc">Streaming de filmes, séries e músicas com transcodificação HW. Suporte a legendas e perfis por usuário.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://jellyfin.xalabiashub.online" class="btn btn-primary" rel="noopener noreferrer" target="_blank">
-                                Abrir Player
-                                <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
-                            </a>
-                        </div>
-                    </article>
+                <article class="card service-card">
+                    <div class="card-header">
+                        <span class="status-indicator online">Online</span>
+                        <span class="service-category">Transferência</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Acesso sFTP</h3>
+                        <p>Transferência de arquivos em massa (FileZilla/WinSCP).</p>
+                        <code class="address-box">sftp://ratto@quite-drivers...</code>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary copy-btn" data-copy="sftp://ratto@quite-drivers.gl.at.ply.gg:26609">Copiar Endereço</button>
+                    </div>
+                </article>
 
-                    <!-- FileBrowser -->
-                    <article class="service-card card-files" aria-labelledby="card-filebrowser">
-                        <div class="card-top">
-                            <div class="card-icon-wrap" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-                            </div>
-                            <div class="card-meta">
-                                <span class="card-category">ARQUIVOS</span>
-                                <span class="status-pill online" role="status">Online</span>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3 id="card-filebrowser" class="card-title">FileBrowser</h3>
-                            <p class="card-desc">Interface web para navegação, upload e download de arquivos remotos. Gerenciamento completo via browser.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="https://files.xalabiashub.online" class="btn btn-primary" rel="noopener noreferrer" target="_blank">
-                                Gerenciar Arquivos
-                                <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
-                            </a>
-                        </div>
-                    </article>
+                <article class="card service-card">
+                    <div class="card-header">
+                        <span class="status-indicator online">Online</span>
+                        <span class="service-category">Gaming</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Minecraft Server</h3>
+                        <p>Instância dedicada com mods ativos. Whitelist habilitada.</p>
+                        <code class="address-box">internet-flowers.gl.joinmc.link</code>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary copy-btn" data-copy="internet-flowers.gl.joinmc.link">Copiar IP</button>
+                    </div>
+                </article>
 
-                    <!-- sFTP -->
-                    <article class="service-card card-admin" aria-labelledby="card-sftp">
-                        <div class="card-top">
-                            <div class="card-icon-wrap" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                            </div>
-                            <div class="card-meta">
-                                <span class="card-category">TRANSFERÊNCIA</span>
-                                <span class="status-pill online" role="status">Online</span>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3 id="card-sftp" class="card-title">Acesso sFTP</h3>
-                            <p class="card-desc">Protocolo seguro para transferência de arquivos em massa. Ideal para sync de grandes volumes.</p>
-                            <code class="address-code" aria-label="Endereço sFTP">sftp://ratto@quite-drivers.gl.at.ply.gg:26609</code>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-secondary copy-btn" data-copy="sftp://ratto@quite-drivers.gl.at.ply.gg:26609" aria-label="Copiar endereço sFTP">
-                                <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                                Copiar Endereço
-                            </button>
-                        </div>
-                    </article>
+                <article class="card service-card">
+                    <div class="card-header">
+                        <span class="status-indicator online">Online</span>
+                        <span class="service-category">Admin</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Terminal SSH</h3>
+                        <p>Acesso root via chave criptográfica ED25519.</p>
+                        <code class="address-box">ssh.xalabias.online</code>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary copy-btn" data-copy="ssh.xalabias.online">Copiar Host</button>
+                    </div>
+                </article>
+            </div>
 
-                    <!-- Minecraft -->
-                    <article class="service-card card-gaming" aria-labelledby="card-minecraft">
-                        <div class="card-top">
-                            <div class="card-icon-wrap" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H9v2H7v-2H5v-2h2V9h2v2h2v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5v-3c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v3c0 .83-.67 1.5-1.5 1.5zm3.5-4h-1v4h-1v-4h-1V9h3v2z"/></svg>
-                            </div>
-                            <div class="card-meta">
-                                <span class="card-category">GAMING</span>
-                                <span class="status-pill online" role="status">Online</span>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3 id="card-minecraft" class="card-title">Servidor Minecraft</h3>
-                            <p class="card-desc">Instância dedicada para usuários autorizados. Mods e configurações personalizadas para o grupo.</p>
-                            <code class="address-code" aria-label="IP do servidor Minecraft">internet-flowers.gl.joinmc.link</code>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-secondary copy-btn" data-copy="internet-flowers.gl.joinmc.link" aria-label="Copiar IP do servidor Minecraft">
-                                <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                                Copiar IP
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- SSH -->
-                    <article class="service-card card-admin" aria-labelledby="card-ssh">
-                        <div class="card-top">
-                            <div class="card-icon-wrap" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 14H5c-.55 0-1-.45-1-1V7c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v10c0 .55-.45 1-1 1zM6 9l2 2-2 2 1 1 3-3-3-3-1 1zm5 6h4v-1h-4v1z"/></svg>
-                            </div>
-                            <div class="card-meta">
-                                <span class="card-category">ADMIN</span>
-                                <span class="status-pill online" role="status">Online</span>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3 id="card-ssh" class="card-title">Terminal SSH</h3>
-                            <p class="card-desc">Shell seguro para administração remota da infraestrutura. Acesso restrito por chave criptográfica.</p>
-                            <code class="address-code" aria-label="Host SSH">ssh.xalabias.online</code>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-secondary copy-btn" data-copy="ssh.xalabias.online" aria-label="Copiar host SSH">
-                                <svg class="btn-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                                Copiar Host
-                            </button>
-                        </div>
-                    </article>
-
-                </div>
-            </section>
-
-            <!-- ===================== INFO GRID ===================== -->
             <div class="info-grid">
-
-                <!-- Guidelines -->
-                <section class="panel" aria-labelledby="guidelines-heading">
-                    <div class="panel-header">
-                        <span class="panel-num" aria-hidden="true">02</span>
-                        <h2 id="guidelines-heading" class="panel-title">Diretrizes de Uso</h2>
-                    </div>
-                    <ul class="guidelines-list" role="list">
-                        <li>
-                            <span class="guideline-icon" aria-hidden="true">🔐</span>
-                            <div>
-                                <strong>Acesso Pessoal</strong>
-                                <p>Credenciais são estritamente individuais e intransferíveis. O acesso é monitorado.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="guideline-icon" aria-hidden="true">📡</span>
-                            <div>
-                                <strong>Gestão de Banda</strong>
-                                <p>Evite downloads massivos simultâneos em horário de pico para garantir o Jellyfin estável.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="guideline-icon" aria-hidden="true">⚙️</span>
-                            <div>
-                                <strong>Manutenção Rolling</strong>
-                                <p>Arch Linux em rolling release. Breves janelas de manutenção podem ocorrer sem aviso.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="guideline-icon" aria-hidden="true">📺</span>
-                            <div>
-                                <strong>App Nativo Recomendado</strong>
-                                <p>Para Jellyfin, prefira os apps para Smart TV, Windows ou Android ao invés do browser.</p>
-                            </div>
-                        </li>
+                <section class="card doc-card">
+                    <h3>Políticas do Servidor</h3>
+                    <ul class="doc-list">
+                        <li><strong>Acesso Monitorado:</strong> Credenciais são intransferíveis.</li>
+                        <li><strong>Fair Use:</strong> Evite tráfego sFTP abusivo em horários de pico comercial para não degradar o streaming do Jellyfin.</li>
+                        <li><strong>Manutenção:</strong> Rolling release. O servidor pode reiniciar para atualizações de kernel do Arch Linux.</li>
                     </ul>
                 </section>
 
-                <!-- Terminal -->
-                <section class="panel" aria-labelledby="monitor-heading">
-                    <div class="panel-header">
-                        <span class="panel-num" aria-hidden="true">03</span>
-                        <h2 id="monitor-heading" class="panel-title">Hardware</h2>
+                <section class="card terminal-card">
+                    <div class="terminal-header">
+                        <div class="window-controls"><i></i><i></i><i></i></div>
+                        <span>admin@xalabiaserver</span>
                     </div>
-                    <div class="terminal" role="region" aria-label="Saída do terminal neofetch">
-                        <div class="terminal-chrome" aria-hidden="true">
-                            <span class="tc-dot tc-red"></span>
-                            <span class="tc-dot tc-yellow"></span>
-                            <span class="tc-dot tc-green"></span>
-                            <span class="tc-label">admin@xalabiaserver:~</span>
+                    <div class="terminal-body">
+                        <p><span class="prompt">$</span> neofetch --stdout</p>
+                        <div class="term-output">
+                            <span><b>OS:</b> Arch Linux x86_64</span>
+                            <span><b>Host:</b> Node-01</span>
+                            <span><b>Uptime:</b> <span id="terminal-uptime">--</span></span>
+                            <span><b>CPU:</b> Intel i3-7100U (4) @ 2.40GHz</span>
+                            <span><b>Mem:</b> 827 MiB / 7800 MiB (10%)</span>
                         </div>
-                        <div class="terminal-body">
-                            <p class="t-line"><span class="t-prompt">❯</span> <span class="t-cmd">neofetch --stdout</span></p>
-                            <div class="t-output">
-                                <p><span class="t-key">OS</span><span class="t-sep">:</span> <span class="t-val">Arch Linux x86_64</span></p>
-                                <p><span class="t-key">Host</span><span class="t-sep">:</span> <span class="t-val">XalabiaServer Node-01</span></p>
-                                <p><span class="t-key">Uptime</span><span class="t-sep">:</span> <span class="t-val" id="terminal-uptime">42d 13:37:00</span></p>
-                                <p><span class="t-key">CPU</span><span class="t-sep">:</span> <span class="t-val">Intel i3-7100U (4) @ 2.40GHz</span></p>
-                                <p><span class="t-key">Memory</span><span class="t-sep">:</span> <span class="t-val">827 MiB / 7800 MiB <span class="t-dim">(10%)</span></span></p>
-                                <p><span class="t-key">Storage</span><span class="t-sep">:</span> <span class="t-val">345 GiB / 1.82 TiB <span class="t-dim">[BTRFS]</span></span></p>
-                                <p><span class="t-key">Network</span><span class="t-sep">:</span> <span class="t-val">1000↓ / 1000↑ Mbps</span></p>
-                                <p><span class="t-key">Proxy</span><span class="t-sep">:</span> <span class="t-val t-green">Reverse Proxy (HTTPS/TLS 1.3) ✓</span></p>
-                            </div>
-                            <p class="t-line t-last"><span class="t-prompt">❯</span> <span class="t-cursor" aria-hidden="true">█</span></p>
-                        </div>
+                        <p><span class="prompt">$</span> <span class="cursor"></span></p>
                     </div>
                 </section>
-
             </div>
         </main>
 
-        <!-- ===================== FOOTER ===================== -->
         <footer class="site-footer">
-            <div class="footer-left">
-                <p class="footer-brand">XalabiaServer <span class="footer-copy">&copy; 2025</span></p>
-                <p class="footer-sub">Infraestrutura autônoma · Gerenciada com carinho e <code>pacman -Syu</code></p>
+            <div class="footer-info">
+                <p><strong>XalabiaServer</strong> &copy; 2025.</p>
+                <p class="sub">Infraestrutura gerenciada de forma autônoma.</p>
             </div>
-            <div class="footer-right">
-                <div class="pix-box">
-                    <p class="pix-label">Apoie a infra via PIX</p>
-                    <button class="pix-btn copy-btn" data-copy="482beb5f-249c-4e65-a7e6-4a6a735e76b1" aria-label="Copiar chave PIX">
-                        <code class="pix-key">482beb5f-249c-4e65-a7e6-4a6a735e76b1</code>
-                        <svg class="copy-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
-                    </button>
-                </div>
+            <div class="support-box">
+                <span>Apoie a infra via PIX:</span>
+                <button class="pix-btn copy-btn" data-copy="482beb5f-249c-4e65-a7e6-4a6a735e76b1">
+                    482beb5f-249c-4e65-a7e6-4a6a735e76b1
+                </button>
             </div>
         </footer>
-
     </div>
 
-    <!-- Toast notification -->
-    <div id="toast" class="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+    <div id="toast" class="toast">Copiado para a área de transferência!</div>
 
     <script src="assets/js/main.js"></script>
     <script src="assets/js/counter.js"></script>
-    <script src="assets/js/effects.js"></script>
 </body>
 </html>
