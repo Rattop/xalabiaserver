@@ -3,28 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="XalabiaServer - Infraestrutura Privada e Hub de Serviços">
-    <title>⚡ XalabiaServer Hub ⚡</title>
+    <meta name="description" content="XalabiaServer - Homelab, Infraestrutura Privada e Portfólio DevOps">
+    <title>⚡ XalabiaServer | Sysadmin Portfolio ⚡</title>
     <style>
         /* ======================
            RESET & BASE
            ====================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: #000;
             background-image: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0, 255, 0, 0.03) 2px,
-                    rgba(0, 255, 0, 0.03) 4px
-                ),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 0, 0.03) 2px, rgba(0, 255, 0, 0.03) 4px),
                 radial-gradient(circle at 20% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
             color: #00FF00;
@@ -34,26 +24,19 @@
             line-height: 1.6;
         }
 
-        /* Efeito de Scanline da Tela CRT */
+        /* Scanline Effect */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
             pointer-events: none;
             z-index: 1000;
         }
 
-        /* Fundo Estrelado Animado */
+        /* Fundo Estrelado */
         .stars {
-            position: fixed;
-            width: 100%; height: 100%;
+            position: fixed; width: 100%; height: 100%;
             background-image: 
                 radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.8), transparent),
                 radial-gradient(2px 2px at 60% 70%, rgba(255,255,255,0.8), transparent),
@@ -64,299 +47,133 @@
             opacity: 0.2;
             z-index: 0;
         }
-
-        @keyframes stars {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-2000px); }
-        }
+        @keyframes stars { 0% { transform: translateY(0); } 100% { transform: translateY(-2000px); } }
 
         /* Container Principal */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 10;
-        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 10; }
 
         /* ======================
-           CABEÇALHO & TÍTULOS
+           HEADER & ASCII
            ====================== */
         .ascii-header {
-            text-align: center;
-            color: #00FF00;
-            font-size: clamp(6px, 1.2vw, 14px);
-            line-height: 1.2;
-            margin: 20px 0;
-            font-weight: bold;
-            text-shadow: 0 0 10px #00FF00;
-            white-space: pre;
-            overflow-x: auto; /* Permite scroll no celular sem quebrar a tela */
+            text-align: center; color: #00FF00; font-size: clamp(6px, 1.2vw, 14px); line-height: 1.2;
+            margin: 20px 0; font-weight: bold; text-shadow: 0 0 10px #00FF00; white-space: pre; overflow-x: auto;
         }
 
-        .main-title {
-            text-align: center;
-            margin: 30px 0;
-        }
-
+        .main-title { text-align: center; margin: 30px 0; }
         .main-title h1 {
-            font-size: clamp(28px, 6vw, 48px);
-            color: #00FF00;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
-            margin-bottom: 10px;
+            font-size: clamp(28px, 6vw, 48px); color: #00FF00; text-transform: uppercase;
+            letter-spacing: 5px; text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00; margin-bottom: 10px;
         }
-
-        .subtitle {
-            color: #00FFFF;
-            font-size: 18px;
-            font-weight: bold;
-        }
+        .subtitle { color: #00FFFF; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
 
         /* ======================
-           MARQUEE (Letreiro)
+           MARQUEE
            ====================== */
         .marquee-container {
             background: linear-gradient(90deg, #004400, #00FF00, #004400);
-            padding: 5px 0;
-            margin: 20px 0;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid #00FF00;
+            padding: 5px 0; margin: 20px 0; overflow: hidden; position: relative; border: 1px solid #00FF00;
         }
-
         .marquee {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 25s linear infinite;
-            color: #000;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 2px;
+            display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite;
+            color: #000; font-weight: bold; text-transform: uppercase; font-size: 14px; letter-spacing: 2px;
         }
-
-        @keyframes marquee {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
         /* ======================
            CAIXAS RETRO (Painéis)
            ====================== */
         .retro-box {
-            border: 2px solid #00FF00;
-            padding: 25px;
-            margin: 30px 0;
-            background: rgba(0, 20, 0, 0.8);
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
-            position: relative;
+            border: 2px solid #00FF00; padding: 25px; margin: 30px 0;
+            background: rgba(0, 20, 0, 0.8); box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); position: relative;
         }
-
         .retro-box::before {
-            content: "◆ SYSTEM";
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: #000;
-            padding: 0 10px;
-            color: #00FF00;
-            font-size: 14px;
-            font-weight: bold;
+            content: "◆ SYSTEM_NODE"; position: absolute; top: -12px; left: 20px;
+            background: #000; padding: 0 10px; color: #00FF00; font-size: 14px; font-weight: bold;
+        }
+        .retro-box h2 {
+            color: #FFFF00; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;
+            font-size: clamp(16px, 3vw, 20px); border-bottom: 1px dashed #00FF00; padding-bottom: 10px;
         }
 
-        .retro-box h2 {
-            color: #FFFF00;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            font-size: clamp(18px, 3vw, 22px);
-            border-bottom: 1px dashed #00FF00;
-            padding-bottom: 10px;
+        /* ======================
+           PROFILE & GITHUB SECTION
+           ====================== */
+        .profile-grid { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
+        .profile-info { flex: 1; min-width: 300px; }
+        .github-wrapper { text-align: right; min-width: 200px; }
+        
+        .github-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: transparent; color: #FFF; border: 2px solid #FFF; padding: 12px 20px;
+            font-family: inherit; font-size: 14px; font-weight: bold; text-transform: uppercase;
+            text-decoration: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
+        .github-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .github-btn:hover { background: #FFF; color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.6); transform: translateY(-2px); }
 
         /* ======================
            GRID DE SERVIÇOS
            ====================== */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .service-card {
-            border: 1px solid #00FF00;
-            padding: 20px;
-            text-align: center;
-            background: rgba(0, 255, 0, 0.05);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            border: 1px solid #00FF00; padding: 20px; text-align: center;
+            background: rgba(0, 255, 0, 0.05); transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
         }
-
         .service-card:hover {
-            transform: translateY(-5px);
-            border-color: #FFFF00;
-            box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
-            background: rgba(255, 255, 0, 0.05);
+            transform: translateY(-5px); border-color: #FFFF00;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.3); background: rgba(255, 255, 0, 0.05);
         }
+        .service-icon { font-size: 32px; margin-bottom: 15px; display: block; }
+        .service-title { font-size: 16px; color: #FFF; margin-bottom: 10px; text-transform: uppercase; }
+        .service-desc { font-size: 12px; color: #888; margin: 10px 0 20px 0; flex-grow: 1; }
 
-        .service-icon {
-            font-size: 36px;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .service-title {
-            font-size: 18px;
-            color: #FFF;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .service-desc {
-            font-size: 12px;
-            color: #888;
-            margin: 10px 0 15px 0;
-            flex-grow: 1;
-        }
-
-        /* Links e Botões de Ação */
+        /* Ações e Badges */
         .action-btn {
-            display: inline-block;
-            width: 100%;
-            padding: 8px 0;
-            background: transparent;
-            color: #00FFFF;
-            border: 1px solid #00FFFF;
-            text-decoration: none;
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s;
+            display: inline-block; width: 100%; padding: 8px 0; background: transparent;
+            color: #00FFFF; border: 1px solid #00FFFF; text-decoration: none; font-family: inherit;
+            font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
         }
+        .action-btn:hover { background: #00FFFF; color: #000; box-shadow: 0 0 10px #00FFFF; }
 
-        .action-btn:hover {
-            background: #00FFFF;
-            color: #000;
-            box-shadow: 0 0 10px #00FFFF;
-        }
+        .status-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .status { padding: 2px 8px; border-radius: 2px; font-size: 10px; text-transform: uppercase; font-weight: bold; }
+        .status.online { background: #00FF00; color: #000; animation: pulse 2s infinite; }
+        .badge { padding: 2px 8px; background: rgba(0, 255, 0, 0.2); border: 1px solid #00FF00; font-size: 10px; color: #00FF00; font-weight: bold; }
 
-        /* ======================
-           UTILIDADES (Badges, Status)
-           ====================== */
-        .status-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .status {
-            padding: 2px 8px;
-            border-radius: 2px;
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .status.online {
-            background: #00FF00;
-            color: #000;
-            animation: pulse 2s infinite;
-        }
-
-        .badge {
-            padding: 2px 8px;
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid #00FF00;
-            font-size: 11px;
-            color: #00FF00;
-            font-weight: bold;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         .blink { animation: blink 1s infinite; }
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
+        @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
         /* ======================
-           TERMINAL E REGRAS
+           TERMINAL E DIRETRIZES
            ====================== */
-        .guide-section {
-            margin-bottom: 20px;
-        }
-        
-        .guide-section h3 {
-            color: #00FFFF;
-            margin-bottom: 10px;
-        }
+        .guide-section { margin-bottom: 20px; }
+        .guide-section h3 { color: #00FFFF; margin-bottom: 10px; font-size: 14px; }
+        .guide-section ul { list-style: none; margin-left: 15px; font-size: 13px; color: #CCC; }
+        .guide-section li { margin-bottom: 8px; }
+        .guide-section li::before { content: "> "; color: #FFFF00; font-weight: bold; }
 
-        .guide-section ul {
-            list-style: none;
-            margin-left: 15px;
-        }
-
-        .guide-section li::before {
-            content: "> ";
-            color: #FFFF00;
-            font-weight: bold;
-        }
-
-        .terminal-box {
-            background: rgba(0,0,0,0.8);
-            padding: 20px;
-            border: 1px solid #00FF00;
-            font-size: 14px;
-        }
-
+        .terminal-box { background: rgba(0,0,0,0.8); padding: 20px; border: 1px solid #00FF00; font-size: 13px; }
         .term-line { margin-bottom: 8px; color: #00FF00; }
         .term-val { color: #FFFF00; }
+        .term-muted { color: #888; font-size: 11px; display: block; margin-top: 5px; }
 
         /* ======================
            FOOTER
            ====================== */
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 30px 20px;
-            border-top: 1px dashed #00FF00;
-        }
-
+        .footer { text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px dashed #00FF00; }
         .visitor-counter {
-            display: inline-block;
-            background: #000;
-            border: 1px solid #00FF00;
-            padding: 8px 20px;
-            margin: 15px 0;
-            font-size: 18px;
-            letter-spacing: 3px;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            display: inline-block; background: #000; border: 1px solid #00FF00;
+            padding: 8px 20px; margin: 15px 0; font-size: 18px; letter-spacing: 3px; box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
-
-        .pix-box {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #FFFF00;
-            background: rgba(255, 255, 0, 0.05);
-            display: inline-block;
-        }
+        .pix-box { margin: 20px 0; padding: 15px; border: 1px solid #FFFF00; background: rgba(255, 255, 0, 0.05); display: inline-block; }
 
         @media (max-width: 600px) {
             .container { padding: 10px; }
             .retro-box { padding: 15px; }
-            .terminal-box { font-size: 12px; }
+            .github-wrapper { text-align: left; margin-top: 15px; width: 100%; }
+            .github-btn { width: 100%; }
         }
     </style>
 </head>
@@ -377,28 +194,49 @@
         <div class="main-title">
             <h1>XalabiaServer</h1>
             <p class="subtitle">
-                ◆ Portal de Infraestrutura <span class="badge">🔒 HTTPS</span> ◆
+                ◆ Rafael Padilha | Sysadmin Portfolio ◆
             </p>
         </div>
 
         <div class="marquee-container">
             <span class="marquee">
-                ★ STATUS OPERACIONAL ★ ACESSO RESTRITO ★ HTTPS ATIVO VIA PROXY REVERSO ★ 24/7 UPTIME ★ INFRAESTRUTURA ARCH LINUX ★
+                ★ INFRAESTRUTURA GERENCIADA ★ HOMELAB 100% ARCH LINUX ★ DEVOPS & ADMINISTRAÇÃO DE SISTEMAS ★ UPTIME SLA ALVO: 99.9% ★
             </span>
         </div>
 
         <div class="retro-box">
-            <h2>⚡ Serviços Ativos</h2>
+            <h2>👤 Administrador & Lab Info</h2>
+            <div class="profile-grid">
+                <div class="profile-info terminal-box" style="border:none; padding:0; background:transparent;">
+                    <p class="term-line">> Root User: <span class="term-val">Rafael Padilha</span></p>
+                    <p class="term-line">> Localização: <span class="term-val">Florianópolis, SC - Brasil</span></p>
+                    <p class="term-line">> Ocupação: <span class="term-val">Sysadmin (Amador) / Foco em Análise de Sistemas</span></p>
+                    <span class="term-muted">
+                        // Este servidor atua como um laboratório prático (Homelab) para testes de deploy, 
+                        gerenciamento de redes, proxy reverso e self-hosting privado.
+                    </span>
+                </div>
+                <div class="github-wrapper">
+                    <a href="https://github.com/Rattop/xalabiaserver" target="_blank" rel="noopener" class="github-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        Ver Repositório
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="retro-box">
+            <h2>⚡ Serviços Implantados</h2>
             <div class="services-grid">
                 
                 <div class="service-card">
                     <span class="service-icon">🎬</span>
-                    <strong class="service-title">Jellyfin</strong>
+                    <strong class="service-title">Jellyfin Media</strong>
                     <div class="status-row">
                         <span class="status online">Online</span>
                         <span class="badge">HTTPS</span>
                     </div>
-                    <p class="service-desc">Streaming de mídia com transcodificação nativa.</p>
+                    <p class="service-desc">Servidor de mídia open-source com transcodificação nativa via hardware.</p>
                     <a href="https://jellyfin.xalabiashub.online" target="_blank" rel="noopener" class="action-btn">Acessar Player</a>
                 </div>
                 
@@ -407,20 +245,20 @@
                     <strong class="service-title">FileBrowser</strong>
                     <div class="status-row">
                         <span class="status online">Online</span>
-                        <span class="badge">HTTPS</span>
+                        <span class="badge">Web GUI</span>
                     </div>
-                    <p class="service-desc">Interface web para gestão e upload de arquivos.</p>
-                    <a href="https://files.xalabiashub.online" target="_blank" rel="noopener" class="action-btn">Acessar Arquivos</a>
+                    <p class="service-desc">Gestão web de diretórios remotos com controle de permissões por usuário.</p>
+                    <a href="https://files.xalabiashub.online" target="_blank" rel="noopener" class="action-btn">Acessar Sistema</a>
                 </div>
                 
                 <div class="service-card">
                     <span class="service-icon">📂</span>
-                    <strong class="service-title">Acesso sFTP</strong>
+                    <strong class="service-title">Protocolo sFTP</strong>
                     <div class="status-row">
                         <span class="status online">Online</span>
                         <span class="badge">Porta 26609</span>
                     </div>
-                    <p class="service-desc">Transferência direta em massa via FileZilla/WinSCP.</p>
+                    <p class="service-desc">Transferência encriptada de arquivos para sincronização em massa de dados.</p>
                     <button class="action-btn" onclick="copyAction(this, 'sftp://ratto@quite-drivers.gl.at.ply.gg:26609')">Copiar Endereço</button>
                 </div>
                 
@@ -431,18 +269,18 @@
                         <span class="status online">Online</span>
                         <span class="badge">Whitelist</span>
                     </div>
-                    <p class="service-desc">Instância dedicada de Minecraft e outros jogos.</p>
+                    <p class="service-desc">Instância isolada de servidor multijogador com controle de acesso.</p>
                     <button class="action-btn" onclick="copyAction(this, 'internet-flowers.gl.joinmc.link')">Copiar IP</button>
                 </div>
 
                 <div class="service-card">
                     <span class="service-icon">💻</span>
-                    <strong class="service-title">Terminal SSH</strong>
+                    <strong class="service-title">Acesso SSH</strong>
                     <div class="status-row">
                         <span class="status online">Online</span>
-                        <span class="badge">Root</span>
+                        <span class="badge">Root/Admin</span>
                     </div>
-                    <p class="service-desc">Acesso seguro de administração via shell.</p>
+                    <p class="service-desc">Acesso administrativo via terminal utilizando chaves criptográficas.</p>
                     <button class="action-btn" onclick="copyAction(this, 'ssh.xalabias.online')">Copiar Host</button>
                 </div>
 
@@ -450,81 +288,73 @@
         </div>
 
         <div class="retro-box">
-            <h2>📡 Diretrizes do Servidor</h2>
+            <h2>📡 Arquitetura & Segurança</h2>
             
             <div class="guide-section">
-                <h3>Conexão & Segurança</h3>
+                <h3>Camada de Rede</h3>
                 <ul>
-                    <li>Todos os serviços web rodam sob <strong>HTTPS</strong> via proxy reverso.</li>
-                    <li>As credenciais de acesso são estritamente pessoais e intransferíveis.</li>
-                    <li>Para transferências pesadas de arquivos, prefira utilizar o protocolo sFTP.</li>
+                    <li>Conexão de fibra residencial simétrica para alta taxa de transferência (1000↓ / 1000↑ Mbps).</li>
+                    <li>Todo o tráfego web é roteado através de um <strong>Proxy Reverso</strong> com certificados SSL/TLS atualizados automaticamente.</li>
                 </ul>
             </div>
 
             <div class="guide-section">
-                <h3>Tráfego & Banda</h3>
+                <h3>Políticas de Acesso</h3>
                 <ul>
-                    <li>Conexão de fibra residencial simétrica (1000 Mbps Down / 1000 Mbps Up).</li>
-                    <li>Evite realizar downloads massivos simultâneos em horários de pico.</li>
-                    <li>Priorize a madrugada para sincronização de bibliotecas pesadas.</li>
+                    <li>Serviços privados operam sob modelo de confiança Zero-Trust, exigindo autenticação robusta.</li>
+                    <li>Sistemas de arquivos estruturados sob o sistema <strong>BTRFS</strong> para garantir integridade e suporte a snapshots nativos.</li>
                 </ul>
             </div>
         </div>
 
         <div class="retro-box">
-            <h2>💻 Monitoramento (Neofetch)</h2>
+            <h2>💻 Monitoramento em Tempo Real (Neofetch)</h2>
             <div class="terminal-box">
                 <p class="term-line">> OS: <span class="term-val">Arch Linux x86_64</span></p>
                 <p class="term-line">> Host: <span class="term-val">XalabiaServer Node-01</span></p>
                 <p class="term-line">> Uptime: <span class="term-val" id="uptime">Calculando...</span></p>
+                <p class="term-line">> Kernel: <span class="term-val">Linux-lts (Rolling Release)</span></p>
                 <p class="term-line">> CPU: <span class="term-val">Intel(R) Core(TM) i3-7100U (4) @ 2.40 GHz</span></p>
                 <p class="term-line">> RAM: <span class="term-val">827 MiB / 7800 MiB (10%)</span></p>
-                <p class="term-line">> Disk: <span class="term-val">345.81 GiB / 1.82 TiB (19%) [BTRFS]</span></p>
-                <p class="term-line">> Proxy: <span style="color: #00FF00;">✓ TLS 1.3 Active</span></p>
+                <p class="term-line">> Storage: <span class="term-val">345.81 GiB / 1.82 TiB (19%) [BTRFS]</span></p>
                 <p class="term-line">> <span class="blink">█</span></p>
             </div>
         </div>
 
         <div class="footer">
-            <p>XalabiaServer © 2025</p>
+            <p>Rafael Padilha | XalabiaServer © 2025</p>
             
             <div class="visitor-counter">
-                VISITANTES: <span id="counter">001337</span>
+                HITS: <span id="counter">001337</span>
             </div>
 
             <div class="pix-box">
-                <p style="color: #FFFF00; margin-bottom: 5px; font-weight: bold;">Apoie a manutenção da infra (PIX):</p>
+                <p style="color: #FFFF00; margin-bottom: 5px; font-weight: bold; font-size: 14px;">Apoio à Infraestrutura (Doação PIX):</p>
                 <button class="action-btn" style="border-color: #FFFF00; color: #FFFF00;" onclick="copyAction(this, '482beb5f-249c-4e65-a7e6-4a6a735e76b1')">
                     Copiar Chave PIX
                 </button>
             </div>
 
             <p style="margin-top: 15px; font-size: 12px; color: #888;">
-                Infraestrutura mantida com ❤️ e Arch Linux<br>
-                <span style="color: #00FF00;">✓ Secured with Reverse Proxy</span>
+                Deploy contínuo e muita documentação.<br>
+                <span style="color: #00FF00;">✓ Secured by HTTPS & Arch Linux Power</span>
             </p>
         </div>
     </div>
 
     <script>
-        // 1. Função de Copiar para a Área de Transferência
+        // Função de Copiar Funcional (API Nativa)
         function copyAction(buttonElement, textToCopy) {
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // Salva o texto original do botão
                 const originalText = buttonElement.innerText;
-                
-                // Feedback visual de sucesso direto no botão
-                buttonElement.innerText = "✓ COPIADO!";
+                buttonElement.innerText = "✓ COPIADO COM SUCESSO!";
                 buttonElement.style.backgroundColor = "#00FFFF";
                 buttonElement.style.color = "#000";
                 
-                // Volta ao normal após 2 segundos
                 setTimeout(() => {
                     buttonElement.innerText = originalText;
                     buttonElement.style.backgroundColor = "transparent";
                     buttonElement.style.color = "#00FFFF";
-                    
-                    // Se for o botão do PIX, restaura a cor amarela original
                     if(buttonElement.innerText.includes("PIX")) {
                         buttonElement.style.color = "#FFFF00";
                     }
@@ -536,33 +366,28 @@
             });
         }
 
-        // 2. Contador de Visitantes (Fictício/Retro)
+        // Contador de Hits (Estilo Retro)
         let counter = 1337;
         setInterval(() => {
             counter += Math.floor(Math.random() * 2);
             document.getElementById('counter').textContent = String(counter).padStart(6, '0');
         }, 12000);
 
-        // 3. Contador de Uptime em Tempo Real
-        // Base: 42 dias, 13 horas, 37 minutos, 0 segundos
+        // Contador de Uptime em Tempo Real (Base: 42d 13h 37m)
         let totalSeconds = (42 * 86400) + (13 * 3600) + (37 * 60);
-
         setInterval(() => {
             totalSeconds++;
-            
             let d = Math.floor(totalSeconds / 86400);
             let h = Math.floor((totalSeconds % 86400) / 3600);
             let m = Math.floor((totalSeconds % 3600) / 60);
             let s = totalSeconds % 60;
-
             document.getElementById('uptime').textContent = 
                 `${d} dias, ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
         }, 1000);
 
-        // 4. Efeito Visual de Clique na Tela (Onda/Ripple da versão original)
+        // Efeito Visual de Clique na Tela
         document.addEventListener('click', (e) => {
-            // Ignora o efeito se clicou em um botão ou link para não atrapalhar
-            if(e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+            if(e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.closest('.github-btn')) return;
 
             const ripple = document.createElement('div');
             ripple.style.position = 'fixed';
@@ -581,13 +406,7 @@
                 style.id = 'ripple-style';
                 style.textContent = `
                     @keyframes ripple-effect {
-                        to {
-                            width: 150px;
-                            height: 150px;
-                            margin-left: -75px;
-                            margin-top: -75px;
-                            opacity: 0;
-                        }
+                        to { width: 150px; height: 150px; margin-left: -75px; margin-top: -75px; opacity: 0; }
                     }
                 `;
                 document.head.appendChild(style);
@@ -597,10 +416,10 @@
             setTimeout(() => ripple.remove(), 800);
         });
 
-        // 5. Easter Egg Console (Homenagem ao Rattão)
-        console.log('%c[SYSTEM] CONEXÃO ESTABELECIDA', 'color: #00FF00; font-size: 16px; font-weight: bold;');
-        console.log('%cTLS 1.3 Handshake Completo. Reverse Proxy Operacional.', 'color: #00FFFF;');
-        console.log('%cTerminal acessado. Bem-vindo de volta, sysadmin.', 'color: #888888;');
+        // Easter Egg Console
+        console.log('%c[SYSTEM] DEPLOYMENT BEM SUCEDIDO', 'color: #00FF00; font-size: 16px; font-weight: bold;');
+        console.log('%cRepositório: https://github.com/Rattop/xalabiaserver', 'color: #00FFFF;');
+        console.log('%cAcesso restrito concedido. Bem-vindo ao laboratório.', 'color: #888888;');
     </script>
 </body>
 </html>
