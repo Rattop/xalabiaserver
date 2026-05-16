@@ -3,207 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="XalabiaServer - Portal de serviços privados com Jellyfin, FileBrowser, FTP e muito mais">
-    <title>⚡ XalabiaServer Hub ⚡ Portal Principal</title>
+    <meta name="description" content="XalabiaServer - Hub de Serviços Privados e Infraestrutura de Mídia">
+    <title>XalabiaServer | Dashboard de Serviços</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     
-    <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/animations.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body>
-    <!-- Background Stars -->
-    <div class="stars" aria-hidden="true"></div>
     
     <div class="container">
         
-        <header>
-            <!-- ASCII Header oculto para leitores de tela -->
-            <pre class="ascii-header" aria-hidden="true">
-░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░       ░▒▓██████▓▒░░▒▓███████▓▒░░▒▓█▓▒░░▒▓██████▓▒░  
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░  
-░▒▓██████▓▒░░▒▓████████▓▒░▒▓█▓▒░      ░▒▓████████▓▒░▒▓███████▓▒░░▒▓█▓▒░▒▓████████▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░         
-            </pre>
-
-            <!-- Main Title -->
-            <div class="main-title">
-                <h1>XalabiaServer</h1>
-                <p>
-                    <span class="decoration" aria-hidden="true">◆</span>
-                    Portal Principal <span class="badge">🔒 HTTPS</span>
-                    <span class="decoration" aria-hidden="true">◆</span>
-                </p>
+        <header class="header-section">
+            <div class="brand">
+                <span class="logo-icon" aria-hidden="true">⬡</span>
+                <div class="brand-text">
+                    <h1>XalabiaServer</h1>
+                    <p>Hub de Infraestrutura e Serviços Privados</p>
+                </div>
             </div>
-
-            <!-- Marquee Banner -->
-            <div class="marquee-container" aria-hidden="true">
-                <span class="marquee">
-                    ★ SERVIDOR DO RATTÃO ★ ACESSO EXCLUSIVO ★ HTTPS SEGURO ★ 24/7 UPTIME ★ LINUX POWER ★ BANDWIDTH ILIMITADA* (*até minha mãe reclamar) ★
-                </span>
+            <div class="security-badge">
+                <span class="icon">🔒</span> Conexão Criptografada (HTTPS)
             </div>
         </header>
 
+        <div class="status-ticker" aria-hidden="true">
+            <div class="ticker-content">
+                <span>STATUS: OPERACIONAL</span>
+                <span class="separator">|</span>
+                <span>REDE: 1.0 Gbps (FULL DUPLEX)</span>
+                <span class="separator">|</span>
+                <span>SISTEMA: ARCH LINUX (BTRFS)</span>
+                <span class="separator">|</span>
+                <span>UPTIME: 99.9%</span>
+            </div>
+        </div>
+
         <main>
-            <!-- Services Section -->
-            <section class="retro-box">
-                <h2>⚡ Serviços Disponíveis</h2>
+            <section class="dashboard-panel">
+                <div class="panel-header">
+                    <h2>Serviços Ativos</h2>
+                    <span class="live-indicator"></span>
+                </div>
+                
                 <div class="services-grid">
                     <article class="service-card">
-                        <span class="service-icon" aria-hidden="true">🎬</span>
-                        <strong>Jellyfin</strong>
-                        <span class="status online">online</span>
-                        <span class="badge">🔒 HTTPS</span>
-                        <a href="https://jellyfin.xalabiashub.online" rel="noopener noreferrer">Acessar →</a>
-                        <p class="service-description">Streaming de mídia seguro</p>
+                        <div class="card-header">
+                            <span class="service-icon" aria-hidden="true">🎬</span>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Jellyfin Media</h3>
+                            <p>Plataforma de streaming de mídia com transcodificação nativa.</p>
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://jellyfin.xalabiashub.online" class="btn-primary" rel="noopener noreferrer">Acessar Plataforma</a>
+                        </div>
                     </article>
                     
                     <article class="service-card">
-                        <span class="service-icon" aria-hidden="true">📁</span>
-                        <strong>FileBrowser</strong>
-                        <span class="status online">online</span>
-                        <span class="badge">🔒 HTTPS</span>
-                        <a href="https://files.xalabiashub.online" rel="noopener noreferrer">Acessar →</a>
-                        <p class="service-description">Gerenciador de arquivos web</p>
+                        <div class="card-header">
+                            <span class="service-icon" aria-hidden="true">📁</span>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>FileBrowser</h3>
+                            <p>Interface web para gestão e sincronização de arquivos remotos.</p>
+                        </div>
+                        <div class="card-actions">
+                            <a href="https://files.xalabiashub.online" class="btn-primary" rel="noopener noreferrer">Gerenciar Arquivos</a>
+                        </div>
                     </article>
                     
                     <article class="service-card">
-                        <span class="service-icon" aria-hidden="true">📂</span>
-                        <strong>sFTP (FileZilla)</strong>
-                        <span class="status online">online</span>
-                        <!-- Trocado de <a> para <button> para ações JS -->
-                        <button class="btn-copy" data-copy="sftp://ratto@quite-drivers.gl.at.ply.gg:26609">Copiar SFTP →</button>
-                        <p class="service-description">Transferência direta via SFTP</p>
+                        <div class="card-header">
+                            <span class="service-icon" aria-hidden="true">🔐</span>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Acesso sFTP</h3>
+                            <p>Protocolo seguro para transferência de arquivos em massa.</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-secondary" data-copy="sftp://ratto@quite-drivers.gl.at.ply.gg:26609">Copiar Endereço sFTP</button>
+                        </div>
                     </article>
                     
                     <article class="service-card">
-                        <span class="service-icon" aria-hidden="true">🎮</span>
-                        <strong>Servidor de Minecraft</strong>
-                        <span class="status online">online</span>
-                        <button class="btn-copy" data-copy="internet-flowers.gl.joinmc.link">Copiar IP →</button>
-                        <p class="service-description">Minecraft & mais</p>
+                        <div class="card-header">
+                            <span class="service-icon" aria-hidden="true">🎮</span>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Servidor Multijogador</h3>
+                            <p>Instância dedicada de Minecraft para usuários autorizados.</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-secondary" data-copy="internet-flowers.gl.joinmc.link">Copiar IP do Servidor</button>
+                        </div>
                     </article>
                     
                     <article class="service-card">
-                        <span class="service-icon" aria-hidden="true">💻</span>
-                        <strong>SSH</strong>
-                        <span class="status online">online</span>
-                        <button class="btn-copy" data-copy="ssh.xalabias.online">Copiar →</button>
-                        <p class="service-description">Pros nerdola do linux</p>
+                        <div class="card-header">
+                            <span class="service-icon" aria-hidden="true">💻</span>
+                            <span class="status-badge online">Online</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Terminal SSH</h3>
+                            <p>Acesso shell seguro para administração da infraestrutura.</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-secondary" data-copy="ssh.xalabias.online">Copiar Host SSH</button>
+                        </div>
                     </article>
                 </div>
             </section>
 
-            <!-- Guide Section -->
-            <section class="retro-box">
-                <h2>📡 Como Funciona o Servidor</h2>
-                
-                <div class="guide-section">
-                    <h3>→ Como Conectar aos Serviços</h3>
-                    <p>Todos os serviços principais agora rodam com HTTPS! Conexão segura e confiável:</p>
-                    <ul>
-                        <li><strong>Jellyfin:</strong> Netflix caseiro com toda a coleção - use o app para melhor experiência</li>
-                        <li><strong>FileBrowser:</strong> Navegue pelos arquivos direto do browser, super prático</li>
-                        <li><strong>SFTP:</strong> Para transferências pesadas, use FileZilla com as credenciais que te passei</li>
-                        <li><strong>Velocidade:</strong> Upload 1Gbps, mas é fibra residencial - paciência com arquivos grandes!</li>
-                    </ul>
-                </div>
+            <div class="info-grid">
+                <section class="dashboard-panel">
+                    <h2>Diretrizes de Utilização</h2>
+                    <div class="doc-content">
+                        <ul>
+                            <li><strong>Privacidade e Acesso:</strong> O acesso aos serviços é restrito e monitorado. As credenciais de acesso são estritamente pessoais e intransferíveis.</li>
+                            <li><strong>Gestão de Banda:</strong> A infraestrutura é provida por um link de fibra ótica de 1 Gbps simétrico. Evite realizar downloads massivos simultâneos em horários de pico comercial para garantir a estabilidade dos serviços de streaming (Jellyfin).</li>
+                            <li><strong>Manutenção do Sistema:</strong> O servidor opera sob o sistema Arch Linux (Rolling Release). Janelas de manutenção e atualizações de kernel podem ocorrer, gerando breves indisponibilidades.</li>
+                            <li><strong>Recomendação de Clientes:</strong> Para melhor decodificação de vídeo e áudio no Jellyfin, recomenda-se a instalação dos aplicativos nativos para Smart TVs, Windows ou Android, em vez da reprodução via navegador.</li>
+                        </ul>
+                    </div>
+                </section>
 
-                <div class="guide-section">
-                    <h3>→ Regras da Casa</h3>
-                    <ul>
-                        <li>Não vaza os links ou senhas - é exclusivo pros chegados</li>
-                        <li>Evita baixar 50 coisas ao mesmo tempo - tem outras pessoas usando</li>
-                        <li>Server roda 24/7, mas as vezes precisa reiniciar para updates</li>
-                        <li>Problemas ou dúvidas? Manda mensagem que eu ajudo!</li>
-                    </ul>
-                </div>
-
-                <div class="guide-section">
-                    <h3>→ Dicas de Ouro</h3>
-                    <ul>
-                        <li>Madrugada = melhor horário para downloads/uploads grandes (menos gente acordada)</li>
-                        <li>Jellyfin no app oficial &gt; browser (performance e integração melhor)</li>
-                        <li>HTTPS deixou tudo mais rápido e seguro, aproveita!</li>
-                        <li>Tem algum filme/série que quer? Manda sugestão que eu vejo!</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- System Status -->
-            <section class="retro-box">
-                <h2>💻 Status do Sistema</h2>
-                <div class="terminal">
-                    <p>&gt; Sistema Operacional: <span class="highlight-yellow">ratto@archlinux</span></p>
-                    <p>&gt; Uptime: <span class="highlight-yellow" id="uptime">42 dias, 13:37:00</span></p>
-                    <p>&gt; CPU: <span class="highlight-yellow">Intel(R) Core(TM) i3-7100U (4) @ 2.40 GHz</span></p>
-                    <p>&gt; RAM: <span class="highlight-yellow">Memory: 827.72 MiB / 7.62 GiB (11%)</span></p>
-                    <p>&gt; Storage: <span class="highlight-yellow">Disk (/mnt/media): 345.81 GiB / 1.82 TiB (19%) - btrfs</span></p>
-                    <p>&gt; Conexão: <span class="highlight-yellow">1000 Mbps Down / 1000 Mbps Up</span></p>
-                    <p>&gt; Proxy: <span class="highlight-green">✓ HTTPS Ativo</span></p>
-                    <p>&gt; <span class="blink">_</span></p>
-                </div>
-            </section>
-
-            <!-- Cool Sites Section (Corrigido) -->
-            <section class="retro-box">
-                <h2>🌐 Relíquias da Internet Antiga</h2>
-                <p class="text-retro-cyan text-center">
-                    Tesouros perdidos da era GeoCities! Clique e viaje no tempo! 🕰️✨
-                </p>
-                
-                <!-- HTML Quebrado Substituído por uma lista semântica -->
-                <ul class="retro-links-list">
-                    <li><a href="#" target="_blank" rel="noopener">Link Retro 1</a></li>
-                    <li><a href="#" target="_blank" rel="noopener">Link Retro 2</a></li>
-                </ul>
-
-                <div class="webmaster-notice">
-                    <img src="https://web.archive.org/web/20091027065803/http://geocities.com/Paris/Boutique/9718/webmaster.gif" 
-                         alt="Webmaster animado" 
-                         onerror="this.style.display='none'" 
-                         class="webmaster-gif">
-                    <p class="notice-text">
-                        Esta página é melhor visualizada no <strong>Netscape Navigator 4.0</strong><br>
-                        com resolução <strong>800x600</strong> e milhões de cores!<br>
-                        <span class="text-small text-muted">Última atualização: Hoje às 13:37 | Visitantes: <span class="blink">∞</span></span>
-                    </p>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>
-                <span class="decoration" aria-hidden="true">☆</span>
-                XalabiaServer © 2025
-                <span class="decoration" aria-hidden="true">☆</span>
-            </p>
-            <div class="visitor-counter">
-                Visitantes: <span id="counter">001337</span>
-            </div>
-            <p class="footer-note">
-                💰 <strong>Ajude a manter o servidor no ar:</strong><br>
-                <span class="pix-key highlight-yellow text-large">PIX: 482beb5f-249c-4e65-a7e6-4a6a735e76b1</span><br><br>
-                Feito com <span class="text-red">❤️</span> e muito café<br>
-                Best viewed in 1024x768 with Netscape Navigator 4.0<br>
-                <span class="highlight-green">✓ Secured with HTTPS Proxy</span>
-            </p>
-        </footer>
-    </div>
-
-    <!-- JavaScript -->
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/counter.js"></script>
-    <script src="assets/js/effects.js"></script>
-    
-    <!-- Cloudflare Insights -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"fdb92feb1d0f4195b3eb6abe7790fbe6","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-</body>
-</html>
+                <section class="dashboard-panel">
+                    <h2>Monitoramento de Hardware</h2>
+                    <div class="terminal-box">
+                        <div class="terminal-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
