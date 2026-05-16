@@ -3,154 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="XalabiaServer — Hub de infraestrutura pessoal. Streaming, gaming e administração.">
+    <meta name="description" content="XalabiaServer - Hub de infraestrutura pessoal.">
     <title>XalabiaServer | Ops Dashboard</title>
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <div class="container">
-        <header class="site-header">
+        <header class="dashboard-header">
             <div class="brand">
-                <div class="brand-logo">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12l10-8 10 8M12 22V12"/></svg>
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
                 </div>
-                <div class="brand-info">
-                    <h1 class="brand-name">XalabiaServer</h1>
-                    <p class="brand-tagline">Node-01 · Infraestrutura Privada</p>
+                <div>
+                    <h1>XalabiaServer</h1>
+                    <p>Node-01 · Infraestrutura Privada</p>
                 </div>
             </div>
-            <div class="header-badges">
-                <span class="badge secure"><span class="dot pulse"></span> TLS 1.3</span>
-                <span class="badge">Arch Linux</span>
+            <div class="status-badges">
+                <span class="badge secure"><span class="pulse-dot"></span> HTTPS Ativo</span>
+                <span class="badge system">Arch Linux</span>
             </div>
         </header>
 
         <section class="metrics-grid">
             <div class="metric-card">
-                <span class="metric-label">Status da Rede</span>
-                <div class="metric-value">1.0 <span class="metric-unit">Gbps</span></div>
-                <span class="metric-subtext">Link Simétrico (Fibra)</span>
+                <span class="metric-title">Rede (Full Duplex)</span>
+                <strong class="metric-value">1.0 <span class="unit">Gbps</span></strong>
+                <span class="metric-desc">Fibra Residencial</span>
             </div>
             <div class="metric-card">
-                <span class="metric-label">Storage (BTRFS)</span>
-                <div class="metric-value">1.82 <span class="metric-unit">TiB</span></div>
-                <span class="metric-subtext">Snapshots Ativos</span>
+                <span class="metric-title">Storage BTRFS</span>
+                <strong class="metric-value">1.82 <span class="unit">TiB</span></strong>
+                <span class="metric-desc">19% Utilizado</span>
             </div>
             <div class="metric-card">
-                <span class="metric-label">System Uptime</span>
-                <div class="metric-value" id="uptime-display">--:--:--</div>
-                <span class="metric-subtext">Alvo: 99.9% SLA</span>
+                <span class="metric-title">System Uptime</span>
+                <strong class="metric-value" id="uptime-display">--:--:--</strong>
+                <span class="metric-desc">Alvo: 99.9%</span>
             </div>
         </section>
 
         <main>
-            <div class="section-heading">
-                <h2>Serviços e Aplicações</h2>
-            </div>
-
+            <h2 class="section-title">Serviços Disponíveis</h2>
             <div class="services-grid">
-                <article class="card service-card">
+                
+                <article class="service-card">
                     <div class="card-header">
-                        <span class="status-indicator online">Online</span>
-                        <span class="service-category">Mídia</span>
+                        <span class="status-indicator">Online</span>
+                        <span class="service-type">Mídia</span>
                     </div>
                     <div class="card-body">
                         <h3>Jellyfin</h3>
-                        <p>Streaming de mídia com transcodificação HW. Perfis e sync de legendas.</p>
+                        <p>Netflix caseiro com toda a coleção. Use o app oficial para melhor performance.</p>
                     </div>
                     <div class="card-footer">
                         <a href="https://jellyfin.xalabiashub.online" class="btn btn-primary" target="_blank" rel="noopener">Acessar Player</a>
                     </div>
                 </article>
 
-                <article class="card service-card">
+                <article class="service-card">
                     <div class="card-header">
-                        <span class="status-indicator online">Online</span>
-                        <span class="service-category">Arquivos</span>
+                        <span class="status-indicator">Online</span>
+                        <span class="service-type">Arquivos</span>
                     </div>
                     <div class="card-body">
                         <h3>FileBrowser</h3>
-                        <p>Interface web de gestão. Upload/download remoto e sincronização.</p>
+                        <p>Navegue, gerencie e faça upload/download de arquivos diretamente pelo browser.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="https://files.xalabiashub.online" class="btn btn-primary" target="_blank" rel="noopener">Gerenciador</a>
+                        <a href="https://files.xalabiashub.online" class="btn btn-primary" target="_blank" rel="noopener">Gerenciador Web</a>
                     </div>
                 </article>
 
-                <article class="card service-card">
+                <article class="service-card">
                     <div class="card-header">
-                        <span class="status-indicator online">Online</span>
-                        <span class="service-category">Transferência</span>
+                        <span class="status-indicator">Online</span>
+                        <span class="service-type">Transferência</span>
                     </div>
                     <div class="card-body">
-                        <h3>Acesso sFTP</h3>
-                        <p>Transferência de arquivos em massa (FileZilla/WinSCP).</p>
-                        <code class="address-box">sftp://ratto@quite-drivers...</code>
+                        <h3>sFTP (FileZilla)</h3>
+                        <p>Transferência de arquivos pesados via protocolo seguro.</p>
+                        <code class="code-box">sftp://ratto@quite-drivers.gl.at.ply.gg:26609</code>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-secondary copy-btn" data-copy="sftp://ratto@quite-drivers.gl.at.ply.gg:26609">Copiar Endereço</button>
                     </div>
                 </article>
 
-                <article class="card service-card">
+                <article class="service-card">
                     <div class="card-header">
-                        <span class="status-indicator online">Online</span>
-                        <span class="service-category">Gaming</span>
+                        <span class="status-indicator">Online</span>
+                        <span class="service-type">Gaming</span>
                     </div>
                     <div class="card-body">
                         <h3>Minecraft Server</h3>
-                        <p>Instância dedicada com mods ativos. Whitelist habilitada.</p>
-                        <code class="address-box">internet-flowers.gl.joinmc.link</code>
+                        <p>Servidor multijogador exclusivo para os chegados. 24/7.</p>
+                        <code class="code-box">internet-flowers.gl.joinmc.link</code>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-secondary copy-btn" data-copy="internet-flowers.gl.joinmc.link">Copiar IP</button>
                     </div>
                 </article>
 
-                <article class="card service-card">
+                <article class="service-card">
                     <div class="card-header">
-                        <span class="status-indicator online">Online</span>
-                        <span class="service-category">Admin</span>
+                        <span class="status-indicator">Online</span>
+                        <span class="service-type">Terminal</span>
                     </div>
                     <div class="card-body">
-                        <h3>Terminal SSH</h3>
-                        <p>Acesso root via chave criptográfica ED25519.</p>
-                        <code class="address-box">ssh.xalabias.online</code>
+                        <h3>Acesso SSH</h3>
+                        <p>Acesso root via terminal para os nerdolas de Linux.</p>
+                        <code class="code-box">ssh.xalabias.online</code>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-secondary copy-btn" data-copy="ssh.xalabias.online">Copiar Host</button>
                     </div>
                 </article>
+
             </div>
 
             <div class="info-grid">
-                <section class="card doc-card">
-                    <h3>Políticas do Servidor</h3>
-                    <ul class="doc-list">
-                        <li><strong>Acesso Monitorado:</strong> Credenciais são intransferíveis.</li>
-                        <li><strong>Fair Use:</strong> Evite tráfego sFTP abusivo em horários de pico comercial para não degradar o streaming do Jellyfin.</li>
-                        <li><strong>Manutenção:</strong> Rolling release. O servidor pode reiniciar para atualizações de kernel do Arch Linux.</li>
+                <section class="info-card">
+                    <h2 class="section-title">Diretrizes da Casa</h2>
+                    <ul class="rules-list">
+                        <li><strong>Exclusividade:</strong> Não vaze links ou senhas. O servidor é exclusivo.</li>
+                        <li><strong>Banda:</strong> Evite baixar múltiplos arquivos simultâneos em horários de pico.</li>
+                        <li><strong>Manutenção:</strong> O sistema roda 24/7, mas reboots rápidos podem ocorrer para updates.</li>
+                        <li><strong>Dica:</strong> A madrugada é o melhor horário para downloads pesados.</li>
                     </ul>
                 </section>
 
-                <section class="card terminal-card">
+                <section class="terminal-card">
                     <div class="terminal-header">
-                        <div class="window-controls"><i></i><i></i><i></i></div>
-                        <span>admin@xalabiaserver</span>
+                        <div class="mac-buttons"><span></span><span></span><span></span></div>
+                        <span class="terminal-title">admin@xalabiaserver:~</span>
                     </div>
                     <div class="terminal-body">
                         <p><span class="prompt">$</span> neofetch --stdout</p>
                         <div class="term-output">
-                            <span><b>OS:</b> Arch Linux x86_64</span>
-                            <span><b>Host:</b> Node-01</span>
-                            <span><b>Uptime:</b> <span id="terminal-uptime">--</span></span>
-                            <span><b>CPU:</b> Intel i3-7100U (4) @ 2.40GHz</span>
-                            <span><b>Mem:</b> 827 MiB / 7800 MiB (10%)</span>
+                            <p><b>OS:</b> Arch Linux x86_64</p>
+                            <p><b>Host:</b> XalabiaServer Node-01</p>
+                            <p><b>CPU:</b> Intel i3-7100U (4) @ 2.40GHz</p>
+                            <p><b>RAM:</b> 827 MiB / 7800 MiB (10%)</p>
+                            <p><b>Disk:</b> 345.81 GiB / 1.82 TiB [BTRFS]</p>
                         </div>
                         <p><span class="prompt">$</span> <span class="cursor"></span></p>
                     </div>
@@ -158,23 +158,22 @@
             </div>
         </main>
 
-        <footer class="site-footer">
-            <div class="footer-info">
+        <footer class="dashboard-footer">
+            <div class="footer-left">
                 <p><strong>XalabiaServer</strong> &copy; 2025.</p>
-                <p class="sub">Infraestrutura gerenciada de forma autônoma.</p>
+                <p class="text-muted">Desenvolvido com ❤️ e muito café.</p>
             </div>
-            <div class="support-box">
-                <span>Apoie a infra via PIX:</span>
-                <button class="pix-btn copy-btn" data-copy="482beb5f-249c-4e65-a7e6-4a6a735e76b1">
+            <div class="footer-right">
+                <span class="pix-label">Apoie a manutenção (PIX):</span>
+                <button class="btn-pix copy-btn" data-copy="482beb5f-249c-4e65-a7e6-4a6a735e76b1">
                     482beb5f-249c-4e65-a7e6-4a6a735e76b1
                 </button>
             </div>
         </footer>
     </div>
 
-    <div id="toast" class="toast">Copiado para a área de transferência!</div>
+    <div id="toast" class="toast">Mensagem</div>
 
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/counter.js"></script>
 </body>
 </html>
