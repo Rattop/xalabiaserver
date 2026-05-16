@@ -3,177 +3,604 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="XalabiaServer - Hub de infraestrutura pessoal.">
-    <title>XalabiaServer | Ops Dashboard</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="assets/css/style.css">
+    <meta name="description" content="XalabiaServer - Infraestrutura Privada e Hub de Serviços">
+    <title>⚡ XalabiaServer Hub ⚡</title>
+    <style>
+        /* ======================
+           RESET & BASE
+           ====================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 0, 0.03) 2px,
+                    rgba(0, 255, 0, 0.03) 4px
+                ),
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
+            color: #00FF00;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Efeito de Scanline da Tela CRT */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Fundo Estrelado Animado */
+        .stars {
+            position: fixed;
+            width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 60% 70%, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.8), transparent);
+            background-size: 200px 200px;
+            animation: stars 150s linear infinite;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        @keyframes stars {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-2000px); }
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ======================
+           CABEÇALHO & TÍTULOS
+           ====================== */
+        .ascii-header {
+            text-align: center;
+            color: #00FF00;
+            font-size: clamp(6px, 1.2vw, 14px);
+            line-height: 1.2;
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00FF00;
+            white-space: pre;
+            overflow-x: auto; /* Permite scroll no celular sem quebrar a tela */
+        }
+
+        .main-title {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .main-title h1 {
+            font-size: clamp(28px, 6vw, 48px);
+            color: #00FF00;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #00FFFF;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* ======================
+           MARQUEE (Letreiro)
+           ====================== */
+        .marquee-container {
+            background: linear-gradient(90deg, #004400, #00FF00, #004400);
+            padding: 5px 0;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #00FF00;
+        }
+
+        .marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ======================
+           CAIXAS RETRO (Painéis)
+           ====================== */
+        .retro-box {
+            border: 2px solid #00FF00;
+            padding: 25px;
+            margin: 30px 0;
+            background: rgba(0, 20, 0, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            position: relative;
+        }
+
+        .retro-box::before {
+            content: "◆ SYSTEM";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #000;
+            padding: 0 10px;
+            color: #00FF00;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .retro-box h2 {
+            color: #FFFF00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-size: clamp(18px, 3vw, 22px);
+            border-bottom: 1px dashed #00FF00;
+            padding-bottom: 10px;
+        }
+
+        /* ======================
+           GRID DE SERVIÇOS
+           ====================== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            border: 1px solid #00FF00;
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 255, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #FFFF00;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+            background: rgba(255, 255, 0, 0.05);
+        }
+
+        .service-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .service-title {
+            font-size: 18px;
+            color: #FFF;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .service-desc {
+            font-size: 12px;
+            color: #888;
+            margin: 10px 0 15px 0;
+            flex-grow: 1;
+        }
+
+        /* Links e Botões de Ação */
+        .action-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 8px 0;
+            background: transparent;
+            color: #00FFFF;
+            border: 1px solid #00FFFF;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #00FFFF;
+            color: #000;
+            box-shadow: 0 0 10px #00FFFF;
+        }
+
+        /* ======================
+           UTILIDADES (Badges, Status)
+           ====================== */
+        .status-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .status.online {
+            background: #00FF00;
+            color: #000;
+            animation: pulse 2s infinite;
+        }
+
+        .badge {
+            padding: 2px 8px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00FF00;
+            font-size: 11px;
+            color: #00FF00;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .blink { animation: blink 1s infinite; }
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* ======================
+           TERMINAL E REGRAS
+           ====================== */
+        .guide-section {
+            margin-bottom: 20px;
+        }
+        
+        .guide-section h3 {
+            color: #00FFFF;
+            margin-bottom: 10px;
+        }
+
+        .guide-section ul {
+            list-style: none;
+            margin-left: 15px;
+        }
+
+        .guide-section li::before {
+            content: "> ";
+            color: #FFFF00;
+            font-weight: bold;
+        }
+
+        .terminal-box {
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border: 1px solid #00FF00;
+            font-size: 14px;
+        }
+
+        .term-line { margin-bottom: 8px; color: #00FF00; }
+        .term-val { color: #FFFF00; }
+
+        /* ======================
+           FOOTER
+           ====================== */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px 20px;
+            border-top: 1px dashed #00FF00;
+        }
+
+        .visitor-counter {
+            display: inline-block;
+            background: #000;
+            border: 1px solid #00FF00;
+            padding: 8px 20px;
+            margin: 15px 0;
+            font-size: 18px;
+            letter-spacing: 3px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .pix-box {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #FFFF00;
+            background: rgba(255, 255, 0, 0.05);
+            display: inline-block;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            .retro-box { padding: 15px; }
+            .terminal-box { font-size: 12px; }
+        }
+    </style>
 </head>
 <body>
+    <div class="stars"></div>
+    
     <div class="container">
-        <header class="dashboard-header">
-            <div class="brand">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-                </div>
-                <div>
-                    <h1>XalabiaServer</h1>
-                    <p>Node-01 · Infraestrutura Privada</p>
-                </div>
-            </div>
-            <div class="status-badges">
-                <span class="badge secure"><span class="pulse-dot"></span> HTTPS Ativo</span>
-                <span class="badge system">Arch Linux</span>
-            </div>
-        </header>
+        <pre class="ascii-header">
+░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░       ░▒▓██████▓▒░░▒▓███████▓▒░░▒▓█▓▒░░▒▓██████▓▒░  
+░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░  
+░▒▓██████▓▒░░▒▓████████▓▒░▒▓█▓▒░      ░▒▓████████▓▒░▒▓███████▓▒░░▒▓█▓▒░▒▓████████▓▒░ 
+░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+        </pre>
 
-        <section class="metrics-grid">
-            <div class="metric-card">
-                <span class="metric-title">Rede (Full Duplex)</span>
-                <strong class="metric-value">1.0 <span class="unit">Gbps</span></strong>
-                <span class="metric-desc">Fibra Residencial</span>
-            </div>
-            <div class="metric-card">
-                <span class="metric-title">Storage BTRFS</span>
-                <strong class="metric-value">1.82 <span class="unit">TiB</span></strong>
-                <span class="metric-desc">19% Utilizado</span>
-            </div>
-            <div class="metric-card">
-                <span class="metric-title">System Uptime</span>
-                <strong class="metric-value" id="uptime-display">--:--:--</strong>
-                <span class="metric-desc">Alvo: 99.9%</span>
-            </div>
-        </section>
+        <div class="main-title">
+            <h1>XalabiaServer</h1>
+            <p class="subtitle">
+                ◆ Portal de Infraestrutura <span class="badge">🔒 HTTPS</span> ◆
+            </p>
+        </div>
 
-        <main>
-            <h2 class="section-title">Serviços Disponíveis</h2>
+        <div class="marquee-container">
+            <span class="marquee">
+                ★ STATUS OPERACIONAL ★ ACESSO RESTRITO ★ HTTPS ATIVO VIA PROXY REVERSO ★ 24/7 UPTIME ★ INFRAESTRUTURA ARCH LINUX ★
+            </span>
+        </div>
+
+        <div class="retro-box">
+            <h2>⚡ Serviços Ativos</h2>
             <div class="services-grid">
                 
-                <article class="service-card">
-                    <div class="card-header">
-                        <span class="status-indicator">Online</span>
-                        <span class="service-type">Mídia</span>
+                <div class="service-card">
+                    <span class="service-icon">🎬</span>
+                    <strong class="service-title">Jellyfin</strong>
+                    <div class="status-row">
+                        <span class="status online">Online</span>
+                        <span class="badge">HTTPS</span>
                     </div>
-                    <div class="card-body">
-                        <h3>Jellyfin</h3>
-                        <p>Netflix caseiro com toda a coleção. Use o app oficial para melhor performance.</p>
+                    <p class="service-desc">Streaming de mídia com transcodificação nativa.</p>
+                    <a href="https://jellyfin.xalabiashub.online" target="_blank" rel="noopener" class="action-btn">Acessar Player</a>
+                </div>
+                
+                <div class="service-card">
+                    <span class="service-icon">📁</span>
+                    <strong class="service-title">FileBrowser</strong>
+                    <div class="status-row">
+                        <span class="status online">Online</span>
+                        <span class="badge">HTTPS</span>
                     </div>
-                    <div class="card-footer">
-                        <a href="https://jellyfin.xalabiashub.online" class="btn btn-primary" target="_blank" rel="noopener">Acessar Player</a>
+                    <p class="service-desc">Interface web para gestão e upload de arquivos.</p>
+                    <a href="https://files.xalabiashub.online" target="_blank" rel="noopener" class="action-btn">Acessar Arquivos</a>
+                </div>
+                
+                <div class="service-card">
+                    <span class="service-icon">📂</span>
+                    <strong class="service-title">Acesso sFTP</strong>
+                    <div class="status-row">
+                        <span class="status online">Online</span>
+                        <span class="badge">Porta 26609</span>
                     </div>
-                </article>
+                    <p class="service-desc">Transferência direta em massa via FileZilla/WinSCP.</p>
+                    <button class="action-btn" onclick="copyAction(this, 'sftp://ratto@quite-drivers.gl.at.ply.gg:26609')">Copiar Endereço</button>
+                </div>
+                
+                <div class="service-card">
+                    <span class="service-icon">🎮</span>
+                    <strong class="service-title">Game Server</strong>
+                    <div class="status-row">
+                        <span class="status online">Online</span>
+                        <span class="badge">Whitelist</span>
+                    </div>
+                    <p class="service-desc">Instância dedicada de Minecraft e outros jogos.</p>
+                    <button class="action-btn" onclick="copyAction(this, 'internet-flowers.gl.joinmc.link')">Copiar IP</button>
+                </div>
 
-                <article class="service-card">
-                    <div class="card-header">
-                        <span class="status-indicator">Online</span>
-                        <span class="service-type">Arquivos</span>
+                <div class="service-card">
+                    <span class="service-icon">💻</span>
+                    <strong class="service-title">Terminal SSH</strong>
+                    <div class="status-row">
+                        <span class="status online">Online</span>
+                        <span class="badge">Root</span>
                     </div>
-                    <div class="card-body">
-                        <h3>FileBrowser</h3>
-                        <p>Navegue, gerencie e faça upload/download de arquivos diretamente pelo browser.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="https://files.xalabiashub.online" class="btn btn-primary" target="_blank" rel="noopener">Gerenciador Web</a>
-                    </div>
-                </article>
-
-                <article class="service-card">
-                    <div class="card-header">
-                        <span class="status-indicator">Online</span>
-                        <span class="service-type">Transferência</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>sFTP (FileZilla)</h3>
-                        <p>Transferência de arquivos pesados via protocolo seguro.</p>
-                        <code class="code-box">sftp://ratto@quite-drivers.gl.at.ply.gg:26609</code>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-secondary copy-btn" data-copy="sftp://ratto@quite-drivers.gl.at.ply.gg:26609">Copiar Endereço</button>
-                    </div>
-                </article>
-
-                <article class="service-card">
-                    <div class="card-header">
-                        <span class="status-indicator">Online</span>
-                        <span class="service-type">Gaming</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Minecraft Server</h3>
-                        <p>Servidor multijogador exclusivo para os chegados. 24/7.</p>
-                        <code class="code-box">internet-flowers.gl.joinmc.link</code>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-secondary copy-btn" data-copy="internet-flowers.gl.joinmc.link">Copiar IP</button>
-                    </div>
-                </article>
-
-                <article class="service-card">
-                    <div class="card-header">
-                        <span class="status-indicator">Online</span>
-                        <span class="service-type">Terminal</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Acesso SSH</h3>
-                        <p>Acesso root via terminal para os nerdolas de Linux.</p>
-                        <code class="code-box">ssh.xalabias.online</code>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-secondary copy-btn" data-copy="ssh.xalabias.online">Copiar Host</button>
-                    </div>
-                </article>
+                    <p class="service-desc">Acesso seguro de administração via shell.</p>
+                    <button class="action-btn" onclick="copyAction(this, 'ssh.xalabias.online')">Copiar Host</button>
+                </div>
 
             </div>
+        </div>
 
-            <div class="info-grid">
-                <section class="info-card">
-                    <h2 class="section-title">Diretrizes da Casa</h2>
-                    <ul class="rules-list">
-                        <li><strong>Exclusividade:</strong> Não vaze links ou senhas. O servidor é exclusivo.</li>
-                        <li><strong>Banda:</strong> Evite baixar múltiplos arquivos simultâneos em horários de pico.</li>
-                        <li><strong>Manutenção:</strong> O sistema roda 24/7, mas reboots rápidos podem ocorrer para updates.</li>
-                        <li><strong>Dica:</strong> A madrugada é o melhor horário para downloads pesados.</li>
-                    </ul>
-                </section>
-
-                <section class="terminal-card">
-                    <div class="terminal-header">
-                        <div class="mac-buttons"><span></span><span></span><span></span></div>
-                        <span class="terminal-title">admin@xalabiaserver:~</span>
-                    </div>
-                    <div class="terminal-body">
-                        <p><span class="prompt">$</span> neofetch --stdout</p>
-                        <div class="term-output">
-                            <p><b>OS:</b> Arch Linux x86_64</p>
-                            <p><b>Host:</b> XalabiaServer Node-01</p>
-                            <p><b>CPU:</b> Intel i3-7100U (4) @ 2.40GHz</p>
-                            <p><b>RAM:</b> 827 MiB / 7800 MiB (10%)</p>
-                            <p><b>Disk:</b> 345.81 GiB / 1.82 TiB [BTRFS]</p>
-                        </div>
-                        <p><span class="prompt">$</span> <span class="cursor"></span></p>
-                    </div>
-                </section>
+        <div class="retro-box">
+            <h2>📡 Diretrizes do Servidor</h2>
+            
+            <div class="guide-section">
+                <h3>Conexão & Segurança</h3>
+                <ul>
+                    <li>Todos os serviços web rodam sob <strong>HTTPS</strong> via proxy reverso.</li>
+                    <li>As credenciais de acesso são estritamente pessoais e intransferíveis.</li>
+                    <li>Para transferências pesadas de arquivos, prefira utilizar o protocolo sFTP.</li>
+                </ul>
             </div>
-        </main>
 
-        <footer class="dashboard-footer">
-            <div class="footer-left">
-                <p><strong>XalabiaServer</strong> &copy; 2025.</p>
-                <p class="text-muted">Desenvolvido com ❤️ e muito café.</p>
+            <div class="guide-section">
+                <h3>Tráfego & Banda</h3>
+                <ul>
+                    <li>Conexão de fibra residencial simétrica (1000 Mbps Down / 1000 Mbps Up).</li>
+                    <li>Evite realizar downloads massivos simultâneos em horários de pico.</li>
+                    <li>Priorize a madrugada para sincronização de bibliotecas pesadas.</li>
+                </ul>
             </div>
-            <div class="footer-right">
-                <span class="pix-label">Apoie a manutenção (PIX):</span>
-                <button class="btn-pix copy-btn" data-copy="482beb5f-249c-4e65-a7e6-4a6a735e76b1">
-                    482beb5f-249c-4e65-a7e6-4a6a735e76b1
+        </div>
+
+        <div class="retro-box">
+            <h2>💻 Monitoramento (Neofetch)</h2>
+            <div class="terminal-box">
+                <p class="term-line">> OS: <span class="term-val">Arch Linux x86_64</span></p>
+                <p class="term-line">> Host: <span class="term-val">XalabiaServer Node-01</span></p>
+                <p class="term-line">> Uptime: <span class="term-val" id="uptime">Calculando...</span></p>
+                <p class="term-line">> CPU: <span class="term-val">Intel(R) Core(TM) i3-7100U (4) @ 2.40 GHz</span></p>
+                <p class="term-line">> RAM: <span class="term-val">827 MiB / 7800 MiB (10%)</span></p>
+                <p class="term-line">> Disk: <span class="term-val">345.81 GiB / 1.82 TiB (19%) [BTRFS]</span></p>
+                <p class="term-line">> Proxy: <span style="color: #00FF00;">✓ TLS 1.3 Active</span></p>
+                <p class="term-line">> <span class="blink">█</span></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>XalabiaServer © 2025</p>
+            
+            <div class="visitor-counter">
+                VISITANTES: <span id="counter">001337</span>
+            </div>
+
+            <div class="pix-box">
+                <p style="color: #FFFF00; margin-bottom: 5px; font-weight: bold;">Apoie a manutenção da infra (PIX):</p>
+                <button class="action-btn" style="border-color: #FFFF00; color: #FFFF00;" onclick="copyAction(this, '482beb5f-249c-4e65-a7e6-4a6a735e76b1')">
+                    Copiar Chave PIX
                 </button>
             </div>
-        </footer>
+
+            <p style="margin-top: 15px; font-size: 12px; color: #888;">
+                Infraestrutura mantida com ❤️ e Arch Linux<br>
+                <span style="color: #00FF00;">✓ Secured with Reverse Proxy</span>
+            </p>
+        </div>
     </div>
 
-    <div id="toast" class="toast">Mensagem</div>
+    <script>
+        // 1. Função de Copiar para a Área de Transferência
+        function copyAction(buttonElement, textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Salva o texto original do botão
+                const originalText = buttonElement.innerText;
+                
+                // Feedback visual de sucesso direto no botão
+                buttonElement.innerText = "✓ COPIADO!";
+                buttonElement.style.backgroundColor = "#00FFFF";
+                buttonElement.style.color = "#000";
+                
+                // Volta ao normal após 2 segundos
+                setTimeout(() => {
+                    buttonElement.innerText = originalText;
+                    buttonElement.style.backgroundColor = "transparent";
+                    buttonElement.style.color = "#00FFFF";
+                    
+                    // Se for o botão do PIX, restaura a cor amarela original
+                    if(buttonElement.innerText.includes("PIX")) {
+                        buttonElement.style.color = "#FFFF00";
+                    }
+                }, 2000);
+            }).catch(err => {
+                console.error("Erro ao copiar: ", err);
+                buttonElement.innerText = "ERRO AO COPIAR";
+                setTimeout(() => buttonElement.innerText = "TENTAR NOVAMENTE", 2000);
+            });
+        }
 
-    <script src="assets/js/main.js"></script>
+        // 2. Contador de Visitantes (Fictício/Retro)
+        let counter = 1337;
+        setInterval(() => {
+            counter += Math.floor(Math.random() * 2);
+            document.getElementById('counter').textContent = String(counter).padStart(6, '0');
+        }, 12000);
+
+        // 3. Contador de Uptime em Tempo Real
+        // Base: 42 dias, 13 horas, 37 minutos, 0 segundos
+        let totalSeconds = (42 * 86400) + (13 * 3600) + (37 * 60);
+
+        setInterval(() => {
+            totalSeconds++;
+            
+            let d = Math.floor(totalSeconds / 86400);
+            let h = Math.floor((totalSeconds % 86400) / 3600);
+            let m = Math.floor((totalSeconds % 3600) / 60);
+            let s = totalSeconds % 60;
+
+            document.getElementById('uptime').textContent = 
+                `${d} dias, ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }, 1000);
+
+        // 4. Efeito Visual de Clique na Tela (Onda/Ripple da versão original)
+        document.addEventListener('click', (e) => {
+            // Ignora o efeito se clicou em um botão ou link para não atrapalhar
+            if(e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+
+            const ripple = document.createElement('div');
+            ripple.style.position = 'fixed';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            ripple.style.width = '10px';
+            ripple.style.height = '10px';
+            ripple.style.background = 'radial-gradient(circle, rgba(0,255,0,0.5), transparent)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.animation = 'ripple-effect 0.8s ease-out';
+            ripple.style.zIndex = '9999';
+            
+            if(!document.getElementById('ripple-style')) {
+                const style = document.createElement('style');
+                style.id = 'ripple-style';
+                style.textContent = `
+                    @keyframes ripple-effect {
+                        to {
+                            width: 150px;
+                            height: 150px;
+                            margin-left: -75px;
+                            margin-top: -75px;
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 800);
+        });
+
+        // 5. Easter Egg Console (Homenagem ao Rattão)
+        console.log('%c[SYSTEM] CONEXÃO ESTABELECIDA', 'color: #00FF00; font-size: 16px; font-weight: bold;');
+        console.log('%cTLS 1.3 Handshake Completo. Reverse Proxy Operacional.', 'color: #00FFFF;');
+        console.log('%cTerminal acessado. Bem-vindo de volta, sysadmin.', 'color: #888888;');
+    </script>
 </body>
 </html>
