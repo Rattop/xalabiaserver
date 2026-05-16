@@ -1,178 +1,218 @@
 /* ======================
-   RESPONSIVE DESIGN
+   RESPONSIVE BREAKPOINTS
    ====================== */
 
-/* Tablets and below */
-@media (max-width: 768px) {
+/* Large desktop — slight breathing room */
+@media (min-width: 1200px) {
     .container {
-        padding: 10px;
+        padding: 0 32px 80px;
     }
+}
 
-    .ascii-header {
-        font-size: 8px;
-        overflow-x: scroll;
-    }
-    
-    .marquee-container {
-        margin: 20px -10px;
-    }
-    
-    .services-grid {
+/* Tablet / Small desktop */
+@media (max-width: 900px) {
+
+    .hero {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 32px;
+        padding: 40px 0 36px;
     }
 
-    .gif-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+    .hero-stats {
+        flex-direction: row;
+        gap: 0;
+        padding: 20px;
     }
 
-    .main-title h1 {
-        font-size: 32px;
-        letter-spacing: 3px;
+    .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        align-items: center;
     }
 
-    .main-title p {
-        font-size: 14px;
+    .stat-divider {
+        width: 1px;
+        height: 40px;
+        background: var(--border);
+        justify-self: center;
     }
 
-    .retro-box {
-        padding: 15px;
+    .stat-item {
+        justify-content: center;
+        text-align: center;
     }
 
-    .retro-box h2 {
-        font-size: 18px;
-        letter-spacing: 2px;
+    .stat-label {
+        text-align: center;
     }
 
-    .service-card {
-        padding: 20px 15px;
-    }
-
-    .guide-section {
-        padding: 15px;
-    }
-
-    .terminal {
-        padding: 10px;
-        font-size: 11px;
-    }
-
-    .terminal p {
-        word-break: break-all;
-    }
-
-    .contact-info {
-        font-size: 16px;
-    }
-
-    .footer {
-        margin-top: 30px;
-        padding: 15px;
+    .info-grid {
+        grid-template-columns: 1fr;
     }
 }
 
-/* Mobile phones */
-@media (max-width: 480px) {
-    .ascii-header {
-        font-size: 6px;
+/* Mobile */
+@media (max-width: 640px) {
+
+    .container {
+        padding: 0 16px 48px;
     }
 
-    .main-title h1 {
-        font-size: 24px;
-        letter-spacing: 2px;
+    /* Header */
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px 0 20px;
     }
 
-    .main-title p {
-        font-size: 12px;
+    .header-nav {
+        width: 100%;
     }
 
-    .marquee {
-        font-size: 12px;
-    }
-
-    .retro-box h2 {
-        font-size: 16px;
-    }
-
-    .service-icon {
-        font-size: 32px;
-    }
-
-    .service-card strong {
-        font-size: 14px;
-    }
-
-    .service-description {
-        font-size: 11px;
-    }
-
-    .guide-section h3 {
-        font-size: 14px;
-    }
-
-    .guide-section p,
-    .guide-section li {
-        font-size: 13px;
-    }
-
-    .terminal {
+    .nav-badge {
         font-size: 10px;
     }
 
-    .visitor-counter {
-        padding: 5px 10px;
-        font-size: 12px;
+    /* Status bar */
+    .status-bar {
+        padding: 10px 14px;
     }
 
-    .badge {
-        font-size: 8px;
-        padding: 2px 6px;
-    }
-
-    .status {
+    .status-bar-inner {
+        gap: 10px;
         font-size: 10px;
-        padding: 1px 6px;
-    }
-}
-
-/* Landscape mode on mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-    .ascii-header {
-        font-size: 7px;
     }
 
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* High-DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-}
-
-/* Print styles */
-@media print {
-    .stars,
-    body::before,
-    .marquee-container,
-    .decoration {
+    .status-sep {
         display: none;
     }
 
-    body {
-        background: white;
-        color: black;
+    /* Hero */
+    .hero {
+        padding: 32px 0 28px;
     }
 
-    .retro-box,
-    .service-card,
-    .terminal {
-        border-color: black;
-        box-shadow: none;
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 20px;
+    }
+
+    .hero-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    .stat-divider {
+        display: none;
+    }
+
+    /* Services */
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Section */
+    .section {
+        padding: 32px 0 0;
+    }
+
+    .section-title {
+        font-size: 17px;
+    }
+
+    /* Panels */
+    .panel {
+        padding: 20px;
+    }
+
+    /* Terminal font smaller on mobile */
+    .terminal-body {
+        font-size: 11px;
+        padding: 12px;
+    }
+
+    .t-key {
+        min-width: 60px;
+    }
+
+    /* Footer */
+    .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pix-box {
+        text-align: left;
+        width: 100%;
+    }
+
+    .pix-btn {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .pix-key {
+        font-size: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 220px;
+    }
+
+    /* Toast */
+    .toast {
+        width: calc(100% - 32px);
+        bottom: 20px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    /* Address code */
+    .address-code {
+        font-size: 10px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    .brand-name {
+        font-size: 18px;
+    }
+
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+    }
+}
+
+/* ======================
+   REDUCED MOTION
+   ====================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .scanlines {
+        display: none;
+    }
+
+    #bg-canvas {
+        display: none;
     }
 }
