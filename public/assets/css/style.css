@@ -130,7 +130,6 @@ body::before {
     font-family: inherit; font-size: 14px; font-weight: bold; text-transform: uppercase;
     text-decoration: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
-.github-btn svg { width: 20px; height: 20px; fill: currentColor; }
 .github-btn:hover { background: #FFF; color: var(--color-bg); box-shadow: 0 0 20px rgba(255,255,255,0.6); transform: translateY(-2px); }
 
 /* ==========================================================================
