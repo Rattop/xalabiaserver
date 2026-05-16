@@ -1,6 +1,6 @@
 /**
  * XalabiaServer - Core Script
- * Gerencia área de transferência, contadores e efeitos de interface.
+ * Gere área de transferência, contadores, efeitos de interface e Fastfetch.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 2000);
 
             } catch (err) {
-                console.error("Falha ao acessar o clipboard: ", err);
+                console.error("Falha ao aceder ao clipboard: ", err);
                 button.innerText = "ERRO AO COPIAR";
                 setTimeout(() => button.innerText = "TENTAR NOVAMENTE", 2000);
             }
@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // =========================================================================
     // 3. CONTADOR DE UPTIME
-    // Base inicial: 42 dias, 13 horas e 37 minutos
     // =========================================================================
     const uptimeElement = document.getElementById('uptime');
     let totalSeconds = (42 * 86400) + (13 * 3600) + (37 * 60);
@@ -130,4 +129,59 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('%cRepositório: https://github.com/Rattop/xalabiaserver', 'color: #00FFFF;');
     console.log('%cStacks Utilizadas: HTML5 Semântico, CSS Grid/Flexbox, Vanilla JS ES6.', 'color: #FFFF00;');
     console.log('%cAcesso restrito concedido. Bem-vindo ao laboratório.', 'color: #888888;');
+
+    // =========================================================================
+    // 6. INTEGRAÇÃO COM FASTFETCH (Lê o TXT gerado pelo servidor)
+    // =========================================================================
+    const fetchOutput = document.getElementById('fastfetch-output');
+    const btnRefresh = document.getElementById('btn-refresh-fetch');
+
+    async function loadFastfetch() {
+        if (!fetchOutput) return;
+
+        try {
+            if (btnRefresh) btnRefresh.innerText = "↻ CARREGANDO...";
+            
+            // O caminho absoluto (/assets/...) evita problemas de rotas no servidor
+            const response = await fetch(`/assets/sysinfo.txt?t=${new Date().getTime()}`);
+            
+            if (response.ok) {
+                const text = await response.text();
+                // Colore as palavras-chave com base na saída padrão do fastfetch
+                const coloredText = text
+                    .replace(/OS:/g, '<span style="color: #00FF00;">OS:</span>')
+                    .replace(/Host:/g, '<span style="color: #00FF00;">Host:</span>')
+                    .replace(/Kernel:/g, '<span style="color: #00FF00;">Kernel:</span>')
+                    .replace(/Uptime:/g, '<span style="color: #00FF00;">Uptime:</span>')
+                    .replace(/Packages:/g, '<span style="color: #00FF00;">Packages:</span>')
+                    .replace(/Shell:/g, '<span style="color: #00FF00;">Shell:</span>')
+                    .replace(/Terminal:/g, '<span style="color: #00FF00;">Terminal:</span>')
+                    .replace(/CPU:/g, '<span style="color: #00FF00;">CPU:</span>')
+                    .replace(/GPU:/g, '<span style="color: #00FF00;">GPU:</span>')
+                    .replace(/Memory:/g, '<span style="color: #00FF00;">Memory:</span>')
+                    .replace(/Swap:/g, '<span style="color: #00FF00;">Swap:</span>')
+                    .replace(/Disk/g, '<span style="color: #00FF00;">Disk')
+                    .replace(/Local IP/g, '<span style="color: #00FF00;">Local IP')
+                    .replace(/Battery/g, '<span style="color: #00FF00;">Battery')
+                    .replace(/Locale:/g, '<span style="color: #00FF00;">Locale:</span>');
+                
+                fetchOutput.innerHTML = coloredText || "Nenhum dado retornado do servidor.";
+            } else {
+                fetchOutput.innerText = "Aguardando primeiro scan do servidor...";
+            }
+        } catch (error) {
+            console.error("Erro ao carregar sysinfo:", error);
+            fetchOutput.innerText = "[ERRO] Telemetria indisponível. Ficheiro não encontrado.";
+        } finally {
+            if (btnRefresh) btnRefresh.innerText = "↻ ATUALIZAR";
+        }
+    }
+
+    // Carrega quando a página abre
+    loadFastfetch();
+
+    // Carrega quando o utilizador clica no botão
+    if (btnRefresh) {
+        btnRefresh.addEventListener('click', loadFastfetch);
+    }
 });
