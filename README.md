@@ -1,106 +1,310 @@
 # XalabiaServer | Private Infrastructure Hub & Portfolio
 
-This repository contains the architecture, configuration, and frontend interface for XalabiaServer, a private operations control panel and homelab environment. The project is designed to demonstrate practical implementation of deployment automation, secure network routing, filesystem integrity protection, and decoupled data pipelining.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-Active-green.svg)](https://github.com/Rattop/xalabiaserver)
+[![Arch Linux](https://img.shields.io/badge/os-ArchLinux-1793D1.svg)](https://archlinux.org/)
+[![BTRFS](https://img.shields.io/badge/filesystem-BTRFS-lightgrey.svg)](https://btrfs.readthedocs.io/)
+[![Frontend](https://img.shields.io/badge/frontend-VanillaJS-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-The interface utilizes a functional terminal-inspired layout optimized for data density, explicit structural semantics, and zero runtime dependencies.
+This repository contains the architecture, configuration, and frontend interface for **XalabiaServer**, a private operations control panel and homelab environment.
 
-## 1. Core Services & Workloads
+The project demonstrates practical implementation of deployment automation, secure network routing, filesystem integrity protection, and decoupled telemetry pipelines while maintaining a lightweight and dependency-free frontend architecture.
 
-The infrastructure architecture provisions several isolated services under a zero-trust perspective, relying on key-based authentication and restricted application access lists.
+The interface utilizes a terminal-inspired layout optimized for:
 
-* **Jellyfin Media Server:** Self-hosted streaming platform configured with native hardware transcoding for efficient resource utilization across client smart TVs, mobile applications, and browser instances.
-* **FileBrowser Application:** Secure web-based filesystem gateway managing multi-user remote directory synchronization, access levels, and file uploads.
-* **Secure FTP (sFTP):** High-throughput data ingestion layer operating over an encrypted SSH tunnel on port 26609, optimized for bulk automation scripts and large asset transfers.
-* **Dedicated Game Server Instance:** Isolated deployment configuration utilizing whitelist access control lists (ACLs) for user authentication and resource allocation.
-* **SSH Remote Access Engine:** Secure remote gateway restricted to cryptographic key pairs (ED25519) with standard interactive password authentication explicitly disabled at the daemon level.
+- Data density
+- Explicit structural semantics
+- Zero runtime dependencies
+- Minimal overhead rendering
+- Native browser compatibility
 
-## 2. Infrastructure & System Topography
+---
 
-* **Operating System:** Arch Linux x86_64 utilizing the LTS kernel branch to guarantee environment stability and long-term compliance.
-* **Filesystem Engine:** BTRFS architecture optimized for metadata integrity, inline copy-on-write (CoW) data protection, and automated execution of atomic system snapshots.
-* **Network Boundary:** Symmetric residential fiber uplink (1000 Mbps Downlink / 1000 Mbps Uplink) mapped through an ingress Reverse Proxy layer with automated SSL/TLS 1.3 certificate management.
+# Table of Contents
 
-## 3. Decoupled Telemetry Pipeline (Fastfetch Integration)
+- [1. Core Services & Workloads](#1-core-services--workloads)
+- [2. Infrastructure & System Topography](#2-infrastructure--system-topography)
+- [3. Decoupled Telemetry Pipeline](#3-decoupled-telemetry-pipeline-fastfetch-integration)
+  - [Telemetry Script Configuration](#telemetry-script-configuration-update_fetchsh)
+  - [System Crontab Rule](#system-crontab-rule)
+- [4. Repository Structure](#4-repository-structure)
+- [5. Development & Local Deployment](#5-development--local-deployment)
+- [6. Security Model](#6-security-model)
+- [7. Design Philosophy](#7-design-philosophy)
+- [8. Maintainer & Focus Areas](#8-maintainer--focus-areas)
 
-To deliver live server telemetry to the frontend while maintaining system isolation—eliminating common web security vulnerabilities such as arbitrary remote code execution (RCE)—the architecture employs a decoupled pipeline pattern:
+---
 
-1.  **Automation Script (`update_fetch.sh`):** A local bash script queries system specifications using `fastfetch`. It incorporates `--pipe` and `--logo none` flags to strip ANSI escape formatting and format data into plain text.
-2.  **Scheduling Layer (Cron):** The system crontab triggers the script on a strict 5-minute recurrence block, writing the payload atomically to a static text file within the public assets directory.
-3.  **Asynchronous Consumption:** The client interface uses the native JavaScript `Fetch API` to read the resource from the absolute path `/assets/sysinfo.txt`. Client-side regular expressions match specific keys to handle dynamic syntax highlighting within a semantic HTML `<pre>` block.
+# 1. Core Services & Workloads
 
-### Telemetry Script Configuration (`update_fetch.sh`)
+The infrastructure architecture provisions multiple isolated services under a zero-trust operational perspective, relying on cryptographic authentication and restricted access control policies.
 
-```
+## Active Services
 
-```text
-File generated successfully.
+### Jellyfin Media Server
+Self-hosted media streaming platform configured with native hardware transcoding for efficient resource utilization across:
+
+- Smart TVs
+- Mobile applications
+- Browser instances
+- Remote streaming clients
+
+### FileBrowser Application
+Secure web-based filesystem gateway managing:
+
+- Multi-user remote synchronization
+- Permission segmentation
+- Directory isolation
+- Remote uploads and downloads
+
+### Secure FTP (sFTP)
+High-throughput ingestion layer operating over encrypted SSH tunnels on port `26609`, optimized for:
+
+- Automation pipelines
+- Large asset transfers
+- Remote backups
+- Scripted deployments
+
+### Dedicated Game Server Instance
+Isolated deployment environment utilizing whitelist ACLs for:
+
+- User authentication
+- Resource isolation
+- Dedicated workload management
+
+### SSH Remote Access Engine
+Secure remote gateway restricted to:
+
+- ED25519 key authentication
+- Explicit access lists
+- Disabled password authentication
+- Hardened daemon configuration
+
+---
+
+# 2. Infrastructure & System Topography
+
+## Operating System
+
+- Arch Linux x86_64
+- LTS kernel branch
+- Rolling-release maintenance strategy
+- Lightweight UNIX-oriented environment
+
+## Filesystem Engine
+
+BTRFS architecture optimized for:
+
+- Metadata integrity
+- Inline copy-on-write (CoW)
+- Snapshot-based rollback
+- Atomic system recovery
+- Incremental backups
+
+## Network Boundary
+
+- Symmetric Fiber Connection
+  - 1000 Mbps Downlink
+  - 1000 Mbps Uplink
+
+- Reverse Proxy ingress layer
+- Automated SSL/TLS 1.3 certificate management
+- Domain routing segmentation
+- Service boundary isolation
+
+---
+
+# 3. Decoupled Telemetry Pipeline (Fastfetch Integration)
+
+To expose live telemetry data to the frontend while maintaining process isolation and avoiding dangerous runtime execution patterns such as Remote Code Execution (RCE), the project employs a decoupled telemetry pipeline.
+
+## Pipeline Flow
+
+### 1. Automation Script (`update_fetch.sh`)
+
+A local Bash script queries host system specifications using `fastfetch`.
+
+The script uses:
+
+- `--pipe`
+- `--logo none`
+
+These flags strip ANSI formatting and generate clean plain-text output suitable for frontend parsing.
+
+### 2. Scheduling Layer (Cron)
+
+A cron scheduler executes the script every 5 minutes.
+
+The generated payload is atomically written into a static file located inside the public assets directory.
+
+### 3. Asynchronous Consumption
+
+The frontend interface asynchronously retrieves the telemetry payload using the native JavaScript `Fetch API`.
+
+The client-side parser:
+
+- Matches semantic keys using RegEx
+- Applies syntax highlighting
+- Renders the content inside semantic `<pre>` blocks
+
+This architecture prevents:
+
+- Arbitrary shell execution
+- Runtime backend exposure
+- Unsafe command injection
+- Direct system process access from the frontend
+
+---
+
+## Telemetry Script Configuration (`update_fetch.sh`)
 
 ```bash
 #!/bin/bash
+
 # Absolute destination path within the web server layout
 OUTPUT_FILE="/var/www/xalabiaserver/public/assets/sysinfo.txt"
 
 # Execute system query and override target file atomically
 fastfetch --logo none --pipe > "$OUTPUT_FILE"
-
 ```
-
-### System Crontab Rule
-
-```text
-# Triggers the telemetry generation script every 5 minutes
-*/5 * * * * /var/www/xalabiaserver/update_fetch.sh
-
-```
-
-## 4. Repository Structure
-
-```text
-/xalabiaserver
-├── public/                 # Web server deployment root
-│   ├── index.html          # Semantic frontend skeleton
-│   └── assets/             # Application static resources
-│       ├── css/
-│       │   └── style.css   # Main layout definitions and styling variables
-│       ├── images/
-│       │   └── favicon.ico # Site branding identity asset
-│       └── js/
-│           └── main.js     # Clipboard handlers and asynchronous fetch logic
-└── update_fetch.sh         # Core automation shell script
-
-```
-
-## 5. Development & Local Deployment
-
-The application runtime environment relies strictly on vanilla web standards. There are no build steps, external runtime frameworks, or package dependencies required to initialize the local server interface.
-
-### Steps to Run Locally
-
-1. Clone the project repository to your local directory:
-```bash
-git clone [https://github.com/Rattop/xalabiaserver.git](https://github.com/Rattop/xalabiaserver.git)
-
-```
-
-
-2. Navigate to the public deployment root directory:
-```bash
-cd xalabiaserver/public
-
-```
-
-
-3. Instantiate a local lightweight web server instance using Python:
-```bash
-python3 -m http.server 8000
-
-```
-
-
-4. Open your browser and navigate to `http://localhost:8000`.
 
 ---
 
-**Maintainer:** Rafael Padilha
+## System Crontab Rule
 
-**Focus Areas:** Systems Analysis, UNIX Infrastructure, Network Topographies, and DevOps Engineering.
+```cron
+# Triggers the telemetry generation script every 5 minutes
+*/5 * * * * /var/www/xalabiaserver/update_fetch.sh
+```
+
+---
+
+# 4. Repository Structure
+
+```text
+/xalabiaserver
+├── public/
+│   ├── index.html
+│   └── assets/
+│       ├── css/
+│       │   └── style.css
+│       ├── images/
+│       │   └── favicon.ico
+│       └── js/
+│           └── main.js
+├── update_fetch.sh
+└── README.md
+```
+
+---
+
+# 5. Development & Local Deployment
+
+The application runtime environment relies exclusively on native web standards.
+
+No frameworks, package managers, transpilers, bundlers, or external runtime dependencies are required.
+
+## Requirements
+
+- Python 3.x
+- Modern web browser
+- Local HTTP server support
+
+---
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Rattop/xalabiaserver.git
+```
+
+---
+
+## Navigate to Public Directory
+
+```bash
+cd xalabiaserver/public
+```
+
+---
+
+## Start Lightweight Development Server
+
+```bash
+python3 -m http.server 8000
+```
+
+---
+
+## Access Local Instance
+
+Open your browser and navigate to:
+
+```text
+http://localhost:8000
+```
+
+---
+
+# 6. Security Model
+
+The infrastructure follows several hardening principles:
+
+- Zero-trust service exposure
+- Key-based authentication
+- Minimal attack surface
+- Isolated service boundaries
+- No direct frontend shell execution
+- Decoupled telemetry ingestion
+- Reverse proxy ingress protection
+- TLS-only external communication
+
+---
+
+# 7. Design Philosophy
+
+The project intentionally avoids unnecessary abstraction layers.
+
+Core principles include:
+
+- Minimalism
+- Transparency
+- Native tooling
+- Infrastructure readability
+- Predictable runtime behavior
+- UNIX-oriented design
+- Long-term maintainability
+
+The frontend is intentionally dependency-free to guarantee:
+
+- Fast loading
+- Maximum compatibility
+- Reduced attack surface
+- Operational simplicity
+
+---
+
+# 8. Maintainer & Focus Areas
+
+## Maintainer
+
+**Rafael Padilha**
+
+## Focus Areas
+
+- Systems Analysis
+- UNIX Infrastructure
+- Network Topographies
+- DevOps Engineering
+- Linux Administration
+- Infrastructure Automation
+- Homelab Architecture
+- Secure Self-Hosting
+
+---
+
+# License
+
+This repository is distributed under the MIT License.
+
+See the `LICENSE` file for additional information.
